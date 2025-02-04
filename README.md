@@ -25,7 +25,8 @@
 > ### WSL:
 > **VENV:** `source ~/.virtualenvs/LocalAI/bin/activate`<br>
 > **API:** `uvicorn TestAPI:app --host localhost --port 8080 --reload`<br>
-> **TELEBIT TUNNEL:** `telebit http 8080`
+> ### CMD:
+> **CLOUDFLARE TUNNEL:** `cloudflared tunnel --url http://localhost:8080`
 
 
 ## AI:
@@ -35,19 +36,13 @@
 
 ## TOOLS: 
 
-> **FastAPI:** https://github.com/fastapi/fastapi<br>
-> 
+> **FastAPI:** https://github.com/fastapi/fastapi<br><br>
 > FastAPI is a modern, high performance, fast API framework, written in Python.
 
----
+> **Cloudflared:** https://github.com/cloudflare/cloudflared<br><br>
+> Creates a secure tunnel between your local device and a remote server, effectively bypassing network restrictions such as firewalls.
 
-> **Telebit:** https://github.com/fastapi/fastapi<br>
-> 
-> Telebit operates by establishing a secure tunnel between your local device and a remote server, effectively bypassing network restrictions such as firewalls and NATs.
-> 
-> **Local Setup**: Telebit Remote client on a local device.
->
+> **[OBSOLETE] Telebit:** https://github.com/fastapi/fastapi<br><br>
+> Telebit operates by establishing a secure tunnel between your local device and a remote server, effectively bypassing network restrictions such as firewalls. <br><br>
+> **Local Setup**: Telebit Remote client on a local device.<br><br>
 > **Relay Server**: Telebit relies on a relay server (telebit.cloud) to facilitate the connection. This server acts as an intermediary, allowing your local device to communicate with external clients.
-
-> **Let¡s Encrypt:** https://letsencrypt.org/es/
-> 
