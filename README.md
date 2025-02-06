@@ -31,14 +31,16 @@
 
 ## AI:
 > ### Ollama:
-> - [Llama-3.2](https://ollama.com/library/llama3.2) `3B` `Tools` - *2GB* <br>
-> - [Deepseek-coder](https://ollama.com/library/deepseek-coder) `6.7B` - *3.8GB* <br>
-> - [Deepseek-R1](https://ollama.com/library/deepseek-r1) `8B` - *4.9GB* <br>
-> - [Deepseek-llm](https://ollama.com/library/deepseek-llm) `7B` - *4GB* <br>
+> - [Llama-3.2](https://ollama.com/library/llama3.2:3b) `3B` `Tools` - *2GB* <br>
+> - [Deepseek-coder](https://ollama.com/library/deepseek-coder:1.3b) `1.3B` - *776MB* <br>
+> - [Deepseek-coder](https://ollama.com/library/deepseek-coder:6.7b) `6.7B` - *3.8GB* <br>
+> - [Deepseek-R1](https://ollama.com/library/deepseek-r1:1.5b) `1.5B` - *1.1GB* <br>
+> - [Deepseek-R1](https://ollama.com/library/deepseek-r1:7b) `8B` - *4.7GB* <br>
+> - [Deepseek-llm](https://ollama.com/library/deepseek-llm:7b) `7B` - *4GB* <br>
 > - [+ Llava](https://ollama.com/library/llava:7b) `7B` `Vision` - *4.7GB* <br>
 > - [+ Llava-llama-3](https://ollama.com/library/llava-llama3) `8B` `Vision` - *5.5GB* <br>
 > <br>
-> **Total storage:** `24.9GB`
+> **Total storage:** `26.6GB`
 
 
 ## TOOLS: 
