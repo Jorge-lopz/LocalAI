@@ -6,6 +6,6 @@ WORKERS = 4  # Processes
 
 app = FastAPI()
 
-@app.get("/api/generate/")
-async def generate(prompt: str):
+@app.get("/generate/")
+async def generate(prompt: str, model: str, length: str):
     return {"response": prompt.lower()}

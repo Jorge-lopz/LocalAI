@@ -1,1 +1,70 @@
-<p>chat works!</p>
+<main class="my-5 d-flex justify-content-center">
+    <div id="bubbles" class="row my-2">
+        <app-bubble *ngFor="let item_bubble of bubbles" [bubble]="item_bubble"></app-bubble>
+    </div>
+    <div class="d-flex flex-column align-items-start" id="promptOverlay" style=" background-color: #313539;">
+        <textarea id="autoExpand" class="form-control inputPrompt" placeholder="Prompt" (input)="onPromptChange($event)"></textarea>
+        <button class="mt-1 btn btn-secondary" style="border-radius: 100px;">camioneta</button>
+    </div>
+</main>
+
+<style>
+    main {
+        margin-inline: 26vw;
+    }
+
+    #bubbles {
+
+        margin-bottom: 25vh !important;
+
+        &:before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3.8rem;
+            display: block;
+            background: #212529;
+        }
+    }
+
+    #promptOverlay {
+
+        position: fixed;
+        justify-items: center;
+        align-items: center;
+        bottom: 3rem;
+        width: 56vw;
+        margin-inline: auto;
+        border-radius: 1.5rem;
+        z-index: 99;
+        padding: 1rem;
+        background-color: #313539;
+
+        .inputPrompt {
+            resize: none;
+            border: none;
+            max-height: calc(12 * 1.5rem);
+            overscroll-behavior: contain;
+            background-color: #313539;
+
+            &:focus {
+                box-shadow: none;
+                /* box-shadow: var(--primary-color) 0px 0px 0px 2px; */
+            }
+
+        }
+    }
+
+    @media (width <=768px) {
+        main {
+            margin-inline: 5vw;
+        }
+
+        #promptOverlay {
+            bottom: 1.2rem;
+            width: 90vw !important;
+        }
+    }
+</style>
