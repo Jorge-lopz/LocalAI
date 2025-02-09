@@ -18,7 +18,7 @@ export class ChatComponent {
     this.data = data;
     this.isBrowser = isPlatformBrowser(platformId);
     if (this.isBrowser) {
-      console.log('Is browser');
+      console.log('Is browser'); // INFO Here
       this.bubbles = JSON.parse(window.localStorage.getItem('bubbles') || '[]');
     }
   }
