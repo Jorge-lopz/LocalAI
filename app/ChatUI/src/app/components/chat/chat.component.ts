@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Inject, PLATFORM_ID } from '@angular/core';
 import { Bubble } from '../../model/bubble';
 import { DataService } from '../../services/data.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-chat',
@@ -10,27 +11,16 @@ import { DataService } from '../../services/data.service';
 })
 export class ChatComponent {
   data = new DataService();
+  bubbles: Bubble[] = [];
+  isBrowser: boolean;
 
-  constructor(data: DataService) {
+  constructor(data: DataService, @Inject(PLATFORM_ID) platformId: any) {
     this.data = data;
+    this.isBrowser = isPlatformBrowser(platformId);
+    if (this.isBrowser) {
+      this.bubbles = JSON.parse(window.localStorage.getItem('bubbles') || '[]');
+    }
   }
-
-  bubbles = [
-    new Bubble('hola', true, this.data.models['llama3.2:3b']),
-    new Bubble('hola', false),
-    new Bubble('hola', true, this.data.models['deepseek-r1:1.5b']),
-    new Bubble('hola', false),
-    new Bubble('hola', true, this.data.models['deepseek-r1:1.5b']),
-    new Bubble('hola', false),
-    new Bubble('hola', true, this.data.models['deepseek-r1:1.5b']),
-    new Bubble('hola', false),
-    new Bubble('hola', true, this.data.models['deepseek-r1:1.5b']),
-    new Bubble('hola', false),
-    new Bubble('hola', true, this.data.models['deepseek-r1:1.5b']),
-    new Bubble('hola', false),
-    new Bubble('hola', true, this.data.models['llama3.2:3b']),
-    new Bubble('adios', false),
-  ];
 
   text: string = '';
 
@@ -44,26 +34,14 @@ export class ChatComponent {
         parseInt(getComputedStyle(target).maxHeight)
       ) + 'px';
   }
-  cambiarColor(button: HTMLButtonElement) {
-    let rgba = window.getComputedStyle(button).backgroundColor;
-    let [r, g, b, a = 1] = rgba.match(/[\d.]+/g)!.map(Number);
-    let alpha = Math.round(a * 255)
-      .toString(16)
-      .padStart(2, '0')
-      .toUpperCase();
-    let colorButton = `#${((1 << 24) | (r << 16) | (g << 8) | b)
-      .toString(16)
-      .slice(1)
-      .toUpperCase()}${alpha}`;
-
-    if (colorButton === '#00000000') {
-      console.log(colorButton);
-      button.style.backgroundColor = 'var(--primary-color)';
-      return;
-    } else {
-      console.log(colorButton);
-      button.style.backgroundColor = '#00000000';
-      return;
+  onPromptSent(event: KeyboardEvent) {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      this.bubbles.push(new Bubble(this.text, false));
+      if (this.isBrowser) {
+        window.localStorage.setItem('bubbles', JSON.stringify(this.bubbles)); // TODO - Cypher it beforehand with user-specific key form DB
+      }
+      // TODO Call API
     }
   }
 }

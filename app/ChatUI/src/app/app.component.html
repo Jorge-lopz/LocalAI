@@ -6,7 +6,7 @@
     <button type="button" class="btn btn-dark p-1 m-0 border-2">
       <img src="icons/share.svg" alt="settings">
     </button>
-    <button id="perfil" type="button" class="btn btn-dark p-1 m-0 border-2">
+    <button id="perfil" type="button" class="btn btn-dark p-0 m-0 border-2">
       <img src="icons/profile.svg" alt="settings">
     </button>
   </div>
@@ -25,17 +25,23 @@
     padding: 1rem !important;
 
     .btn-dark {
+      width: 2.3rem !important;
+      height: 2.3rem !important;
+      aspect-ratio: 1/1 !important;
       border-color: rgba(var(--primary-color), 0.4);
 
       img {
         width: 100% !important;
-        aspect-ratio: 1/1;
+        height: 100% !important;
+        margin-bottom: 100% !important;
       }
+
     }
 
     #perfil {
+      border: none !important;
       margin-left: auto !important;
-      width: 2.5rem !important;
+      width: fit-content !important;
       border-radius: 50%;
     }
   }

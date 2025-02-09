@@ -3,19 +3,20 @@
         <app-bubble *ngFor="let item_bubble of bubbles" [bubble]="item_bubble"></app-bubble>
     </div>
     <div class="d-flex flex-column align-items-start" id="promptOverlay" style=" background-color: #313539;">
-        <textarea id="autoExpand" class="form-control inputPrompt" placeholder="Prompt" (input)="onPromptChange($event)"></textarea>
+        <textarea id="autoExpand" class="form-control inputPrompt" placeholder="Prompt" (input)="onPromptChange($event)"
+            (keydown)="onPromptSent($event)"></textarea>
         <div class="d-flex gap-2">
             <div class="btn-group" role="group">
-                <input type="checkbox" class="btn-check" id="Search" autocomplete="off">
-                <label class="btn btn-outline-secondary px-3 pb-2 mt-1" style="border-radius: 100px" for="Search">Search</label>
+                <input type="checkbox" class="btn-check" id="Search">
+                <label class="btn btn-outline-secondary px-3 pb-2 mt-1" for="Search">Search</label>
             </div>
             <div class="btn-group" role="group">
-                <input type="checkbox" class="btn-check" id="Coder" autocomplete="off">
-                <label class="btn btn-outline-secondary px-3 pb-2 mt-1" style="border-radius: 100px" for="Coder">Coder</label>
+                <input type="checkbox" class="btn-check" id="Coder">
+                <label class="btn btn-outline-secondary px-3 pb-2 mt-1" for="Coder">Coder</label>
             </div>
             <div class="btn-group" role="group">
-                <input type="checkbox" class="btn-check" id="DeepThink" autocomplete="off">
-                <label class="btn btn-outline-secondary px-3 pb-2 mt-1" style="border-radius: 100px" for="DeepThink">DeepThink (R1)</label>
+                <input type="checkbox" class="btn-check" id="DeepThink">
+                <label class="btn btn-outline-secondary px-3 pb-2 mt-1" for="DeepThink">DeepThink (R1)</label>
             </div>
         </div>
 
@@ -84,6 +85,7 @@
                 position: relative;
                 display: flex;
                 align-items: center;
+                border-radius: 100px;
 
                 &:before {
                     content: '';
