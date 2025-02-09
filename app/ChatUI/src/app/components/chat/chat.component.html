@@ -4,7 +4,21 @@
     </div>
     <div class="d-flex flex-column align-items-start" id="promptOverlay" style=" background-color: #313539;">
         <textarea id="autoExpand" class="form-control inputPrompt" placeholder="Prompt" (input)="onPromptChange($event)"></textarea>
-        <button class="mt-1 btn btn-secondary" style="border-radius: 100px;">camioneta</button>
+        <div class="d-flex gap-2">
+            <div class="btn-group" role="group">
+                <input type="checkbox" class="btn-check" id="Search" autocomplete="off">
+                <label class="btn btn-outline-secondary px-3 pb-2 mt-1" style="border-radius: 100px" for="Search">Search</label>
+            </div>
+            <div class="btn-group" role="group">
+                <input type="checkbox" class="btn-check" id="Coder" autocomplete="off">
+                <label class="btn btn-outline-secondary px-3 pb-2 mt-1" style="border-radius: 100px" for="Coder">Coder</label>
+            </div>
+            <div class="btn-group" role="group">
+                <input type="checkbox" class="btn-check" id="DeepThink" autocomplete="off">
+                <label class="btn btn-outline-secondary px-3 pb-2 mt-1" style="border-radius: 100px" for="DeepThink">DeepThink (R1)</label>
+            </div>
+        </div>
+
     </div>
 </main>
 
@@ -34,12 +48,12 @@
         position: fixed;
         justify-items: center;
         align-items: center;
-        bottom: 3rem;
-        width: 56vw;
+        bottom: 1.3rem;
+        width: 50vw;
         margin-inline: auto;
-        border-radius: 1.5rem;
+        border-radius: 2rem;
         z-index: 99;
-        padding: 1rem;
+        padding: 1rem 1rem 0.5rem 1rem;
         background-color: #313539;
 
         .inputPrompt {
@@ -55,16 +69,72 @@
             }
 
         }
-    }
 
-    @media (width <=768px) {
-        main {
-            margin-inline: 5vw;
+        input[type="checkbox"] {
+
+            &+label {
+                --color: #ffffff80;
+                margin-bottom: 5px;
+                padding-top: 7px;
+                height: 2.2rem;
+                color: var(--color);
+                font-size: 13px;
+                font-weight: 500;
+                border-width: 1.5px;
+                position: relative;
+                display: flex;
+                align-items: center;
+
+                &:before {
+                    content: '';
+                    margin-top: 2px;
+                    margin-left: -7px;
+                    margin-right: 7px;
+                    display: inline-block;
+                    width: 21px;
+                    height: 21px;
+                    mask-size: contain;
+                    background-color: var(--color);
+                }
+            }
+
+            &#Search+label:before {
+                mask-image: url('../../../../public/icons/browse.svg');
+            }
+
+            &#Coder+label:before {
+                mask-image: url('../../../../public/icons/code.svg') !important;
+            }
+
+            &#DeepThink+label:before {
+                mask-image: url('../../../../public/icons/deepthink.svg') !important;
+            }
+
+            &:checked+label {
+                background-color: rgba(var(--primary-color), 0.2);
+                color: color-mix(in srgb, rgb(var(--primary-color)), rgb(150, 200, 150));
+                border-color: rgba(var(--primary-color), 0.8);
+
+                &:before {
+                    background-color: color-mix(in srgb, rgb(var(--primary-color)), rgb(150, 200, 150));
+                }
+            }
+
         }
 
-        #promptOverlay {
-            bottom: 1.2rem;
-            width: 90vw !important;
+        .btn-outline-primary {
+            color: white !important;
+        }
+
+        @media (width <=768px) {
+            main {
+                margin-inline: 5vw;
+            }
+
+            #promptOverlay {
+                bottom: 1.2rem;
+                width: 90vw !important;
+            }
         }
     }
 </style>

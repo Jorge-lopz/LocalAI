@@ -1,9 +1,42 @@
 <main style="position: relative;">
+  <div class="topButtons d-flex gap-2 position-fixed z-3">
+    <button type="button" class="btn btn-dark p-1 m-0 border-2">
+      <img src="icons/settings.svg" alt="settings">
+    </button>
+    <button type="button" class="btn btn-dark p-1 m-0 border-2">
+      <img src="icons/share.svg" alt="settings">
+    </button>
+    <button id="perfil" type="button" class="btn btn-dark p-1 m-0 border-2">
+      <img src="icons/profile.svg" alt="settings">
+    </button>
+  </div>
   <app-chat></app-chat>
 </main>
 
 <style>
   * {
-    --primary-color: #75b798;
+    --primary-color: 117, 183, 152;
+  }
+
+  .topButtons {
+    top: 0;
+    left: 0;
+    width: 100svw !important;
+    padding: 1rem !important;
+
+    .btn-dark {
+      border-color: rgba(var(--primary-color), 0.4);
+
+      img {
+        width: 100% !important;
+        aspect-ratio: 1/1;
+      }
+    }
+
+    #perfil {
+      margin-left: auto !important;
+      width: 2.5rem !important;
+      border-radius: 50%;
+    }
   }
 </style>
