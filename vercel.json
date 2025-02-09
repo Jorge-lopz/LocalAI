@@ -1,0 +1,11 @@
+{
+	"builds": [
+		{
+			"src": "app/ChatUI/package.json",
+			"use": "@vercel/static-build",
+			"config": {
+				"distDir": "dist"
+			}
+		}
+	]
+}
