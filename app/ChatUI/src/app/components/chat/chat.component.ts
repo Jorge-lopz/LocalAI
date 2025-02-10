@@ -10,12 +10,10 @@ import { isPlatformBrowser } from '@angular/common';
   styleUrl: './chat.component.css',
 })
 export class ChatComponent {
-  data = new DataService();
   bubbles: Bubble[] = [];
   isBrowser: boolean;
 
-  constructor(data: DataService, @Inject(PLATFORM_ID) platformId: any) {
-    this.data = data;
+  constructor(private data: DataService, @Inject(PLATFORM_ID) platformId: any) {
     this.isBrowser = isPlatformBrowser(platformId);
 
     if (this.isBrowser) {
@@ -70,5 +68,9 @@ export class ChatComponent {
       }, 100);
       // TODO Call API
     }
+  }
+
+  exportData() {
+    // TODO export data
   }
 }
