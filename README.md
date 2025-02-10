@@ -34,14 +34,15 @@ leaving the user's data completely private and trasnfered through secure protoco
 ## AI:
 
 #### Ollama:
->
+
 > - [Llama-3.2](https://ollama.com/library/llama3.2:3b) `3B` `Tools` - _2GB_ <br>
 > - [Deepseek-coder](https://ollama.com/library/deepseek-coder:6.7b) `6.7B` - _3.8GB_ <br>
 > - [Deepseek-R1](https://ollama.com/library/deepseek-r1:1.5b) `1.5B` - _1.1GB_ <br>
 > - [Deepseek-llm](https://ollama.com/library/deepseek-llm:7b) `7B` - _4GB_ <br>
 > - [+ Llava](https://ollama.com/library/llava:7b) `7B` `Vision` - _4.7GB_ <br>
-> - [+ Llava-llama-3](https://ollama.com/library/llava-llama3) `8B` `Vision` - _5.5GB_ <br><br>
->  **Total storage:** `11.4GB`
+> - [+ Llava-llama-3](https://ollama.com/library/llava-llama3) `8B` `Vision` - _5.5GB_
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **Total storage:** `11.4GB`
 
 ## TOOLS:
 
