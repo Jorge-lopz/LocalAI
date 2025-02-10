@@ -17,17 +17,29 @@ export class ChatComponent {
   constructor(data: DataService, @Inject(PLATFORM_ID) platformId: any) {
     this.data = data;
     this.isBrowser = isPlatformBrowser(platformId);
+
     if (this.isBrowser) {
-      console.log('Is browser'); // INFO Here
-      this.bubbles = JSON.parse(window.localStorage.getItem('bubbles') || '[]');
+      let storedBubbles = window.localStorage.getItem('bubbles');
+      if (storedBubbles) {
+        this.bubbles = JSON.parse(storedBubbles).map(
+          (b: any) => new Bubble(b.message, b.response, b.model)
+        );
+      }
+    }
+  }
+
+  ngAfterViewInit() {
+    if (this.isBrowser) {
+      window.scrollTo({
+        top: document.querySelector('#bubbles')!.scrollHeight,
+        behavior: 'smooth',
+      });
     }
   }
 
   text: string = '';
 
-  onPromptChange(event: Event): void {
-    let target = event.target as HTMLTextAreaElement;
-    this.text = target.value;
+  setHeight(target: HTMLTextAreaElement) {
     target.style.height = 'auto';
     target.style.height =
       Math.min(
@@ -35,13 +47,27 @@ export class ChatComponent {
         parseInt(getComputedStyle(target).maxHeight)
       ) + 'px';
   }
+
+  onPromptChange(event: Event): void {
+    let target = event.target as HTMLTextAreaElement;
+    this.text = target.value;
+    this.setHeight(target);
+  }
   onPromptSent(event: KeyboardEvent) {
     if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault();
+      if (this.text.trim() === '') return; // Stop if empty input
+      (event.target as HTMLTextAreaElement).value = '';
+      this.setHeight(event.target as HTMLTextAreaElement);
       this.bubbles.push(new Bubble(this.text, false));
-      if (this.isBrowser) {
-        window.localStorage.setItem('bubbles', JSON.stringify(this.bubbles)); // TODO - Cypher it beforehand with user-specific key form DB
-      }
+      this.text = '';
+      window.localStorage.setItem('bubbles', JSON.stringify(this.bubbles)); // TODO - Cypher it beforehand with user-specific key form DB
+      setTimeout(() => {
+        window.scrollTo({
+          top: document.querySelector('#bubbles')!.scrollHeight,
+          behavior: 'smooth',
+        });
+      }, 100);
       // TODO Call API
     }
   }

@@ -1,28 +1,32 @@
 <main style="position: relative;">
-  <div class="topButtons d-flex gap-2 position-fixed z-3">
+  <!-- Header -->
+  <div class="header d-flex gap-2 position-fixed z-3">
     <button type="button" class="btn btn-dark p-1 m-0 border-2">
       <img src="icons/settings.svg" alt="settings">
     </button>
     <button type="button" class="btn btn-dark p-1 m-0 border-2">
       <img src="icons/share.svg" alt="settings">
     </button>
-    <button id="perfil" type="button" class="btn btn-dark p-0 m-0 border-2">
+    <p style="margin-left: 42%; font-size: larger; font-weight: 500; opacity: 0.5; padding-top: 4px; user-select: none;">
+      Local AI</p>
+    <button id="profile" type="button" class="btn btn-dark p-0 m-0 border-2">
       <img src="icons/profile.svg" alt="settings">
     </button>
   </div>
+  <!-- Chat -->
   <app-chat></app-chat>
+  <!-- Footer -->
+  <div class="footer d-flex position-fixed z-3"></div>
 </main>
 
 <style>
-  * {
-    --primary-color: 117, 183, 152;
-  }
-
-  .topButtons {
+  .header {
     top: 0;
     left: 0;
     width: 100svw !important;
     padding: 1rem !important;
+    background: var(--bs-body-bg);
+    box-shadow: var(--bs-body-bg) 0 0 20px 20px;
 
     .btn-dark {
       width: 2.3rem !important;
@@ -36,13 +40,21 @@
         margin-bottom: 100% !important;
       }
 
-    }
 
-    #perfil {
-      border: none !important;
-      margin-left: auto !important;
-      width: fit-content !important;
-      border-radius: 50%;
+      &#profile {
+        border: none !important;
+        margin-left: auto !important;
+        width: fit-content !important;
+        border-radius: 50%;
+      }
     }
+  }
+
+  .footer {
+    background: var(--bs-body-bg);
+    bottom: 0;
+    left: 0;
+    width: 100svw !important;
+    padding: 1rem !important;
   }
 </style>
