@@ -1,7 +1,7 @@
-import { Component, Inject, PLATFORM_ID } from '@angular/core';
+import { Component } from '@angular/core';
 import { Bubble } from '../../model/bubble';
 import { DataService } from '../../services/data.service';
-import { isPlatformBrowser } from '@angular/common';
+import { Model } from '../../model/model';
 
 @Component({
   selector: 'app-chat',
@@ -11,23 +11,28 @@ import { isPlatformBrowser } from '@angular/common';
 })
 export class ChatComponent {
   bubbles: Bubble[] = [];
-  isBrowser: boolean;
 
-  constructor(private data: DataService, @Inject(PLATFORM_ID) platformId: any) {
-    this.isBrowser = isPlatformBrowser(platformId);
-
-    if (this.isBrowser) {
+  constructor(private data: DataService) {
+    if (data.isBrowser) {
       let storedBubbles = window.localStorage.getItem('bubbles');
       if (storedBubbles) {
         this.bubbles = JSON.parse(storedBubbles).map(
-          (b: any) => new Bubble(b.message, b.response, b.model)
+          (b: any) =>
+            new Bubble(
+              b.message,
+              b.response,
+              Object.values(data.models).find(
+                (value: any) => value.id === b.model
+              ) as Model
+            )
         );
+        console.log(this.bubbles);
       }
     }
   }
 
   ngAfterViewInit() {
-    if (this.isBrowser) {
+    if (this.data.isBrowser) {
       window.scrollTo({
         top: document.querySelector('#bubbles')!.scrollHeight,
         behavior: 'smooth',
@@ -60,6 +65,7 @@ export class ChatComponent {
       this.bubbles.push(new Bubble(this.text, false));
       this.text = '';
       window.localStorage.setItem('bubbles', JSON.stringify(this.bubbles)); // TODO - Cypher it beforehand with user-specific key form DB
+      console.log(this.bubbles);
       setTimeout(() => {
         window.scrollTo({
           top: document.querySelector('#bubbles')!.scrollHeight,

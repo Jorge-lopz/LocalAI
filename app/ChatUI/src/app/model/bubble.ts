@@ -1,3 +1,4 @@
+import { DataService } from '../services/data.service';
 import { Model } from './model';
 
 export class Bubble {

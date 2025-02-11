@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import ollama
 import subprocess
@@ -9,51 +10,22 @@ WORKERS = 4  # Processes
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:4200", "localchat-ai.vercel.app"],
+    allow_credentials=True,
+    allow_methods=["GET", "POST"],
+    allow_headers=["*"],
+)
+
 class request(BaseModel):
     prompt: str
     model: str
     length: str
-
-def format_model_name(input_str):
-    # Dividir el string en nombre y versión usando ":" como separador
-    parts = input_str.split(":", 1)
-    name = parts[0].strip()
-    version = parts[1].strip() if len(parts) > 1 else ""
-
-    # Capitalizar la primera letra y mantener el resto del formato original
-    formatted_name = name[0].upper() + name[1:] if name else ""
-    
-    # Agregar la versión entre paréntesis si existe
-    if version:
-        return f"{formatted_name} ({version})"
-    else:
-        return formatted_name
-
-def get_avatar(name):
-     if name.lower().startswith('llama'):
-         return "models/llama.svg"
-     elif name.lower().startswith('deepseek'):
-         return "models/deepseek.svg"
-    
     
 @app.get("/test")
 async def test():
-    models = subprocess.run(["ollama", "list"], capture_output=True, text=True).stdout
-    lines = models.strip().split("\n")[1:]  # Divide por líneas y elimina espacios al inicio/final
-    final_models = {}
-    for line in lines:
-        # Divide la línea por espacios y filtra los elementos vacíos
-        parts = [part for part in line.split(" ") if part]
-
-        name = format_model_name(parts[0])
-        # No Imprime nada
-        final_models[parts[0]] = {
-            "avatar": get_avatar(name),
-            "name": name,
-            "id": parts[1]
-            }
-
-    return final_models
+    return {"response": "Hello, World!"}
 
 @app.post("/generate")
 async def generate(request: request):
@@ -63,7 +35,21 @@ async def generate(request: request):
 
 @app.get("/models")
 async def models():
-    pass
+    models = subprocess.run(["ollama", "list"], capture_output=True, text=True).stdout
+    lines = models.strip().split("\n")[1:]
+    models = {}
+    for line in lines:
+        parts = [part for part in line.split(" ") if part]
+
+        key = parts[0]
+        name, version = (key.split(":", 1) + [""])[0].strip(), (key.split(":", 1) + [""])[1].strip()
+        models[parts[0]] = {
+            "avatar": 'models/' + ("llama.svg" if key.startswith('llama') else "deepseek.svg" if key.startswith('deepseek') else 'ia.svg'),
+            "name": f"{name[0].upper() + name[1:]} ({version})" if version else name[0].upper() + name[1:] if name else "",
+            "id": parts[1]
+        }
+
+    return {"response": models}
 
 
 # https://github.com/ollama/ollama-python
