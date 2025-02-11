@@ -28,8 +28,7 @@ leaving the user's data completely private and trasnfered through secure protoco
 
 #### CMD:
 
-> **API:** `uvicorn api:app --host localhost --port 8080 --reload`<br>
-> **CLOUDFLARE TUNNEL:** `cloudflared tunnel --url http://localhost:8080`
+> **API:** `uvicorn api:app --host localhost --port 8080 --reload`<br> > **CLOUDFLARE TUNNEL:** `cloudflared tunnel --url http://localhost:8080`
 
 ## AI:
 
@@ -47,10 +46,21 @@ leaving the user's data completely private and trasnfered through secure protoco
 ## TOOLS:
 
 **FastAPI:** https://github.com/fastapi/fastapi
+
 > FastAPI is a modern, high performance, fast API framework, written in Python.
 
 **Cloudflared:** https://github.com/cloudflare/cloudflared
+
 > Creates a secure tunnel between your local device and a remote server, effectively bypassing network restrictions such as firewalls.
 
+**DuckDNS** https://www.duckdns.org
+
+> Service to point a DuckDNS Subdomain to my IP
+
+**Let's Encrypt** https://letsencrypt.org/es
+
+> Generate a third-party valid certificate for your own domains
+
 **[OBSOLETE] Telebit:** https://github.com/fastapi/fastapi
+
 > Telebit operates by establishing a secure tunnel between your local device and a remote server, effectively bypassing network restrictions such as firewalls. <br><br> > **Local Setup**: Telebit Remote client on a local device.<br><br> > **Relay Server**: Telebit relies on a relay server (telebit.cloud) to facilitate the connection. This server acts as an intermediary, allowing your local device to communicate with external clients.

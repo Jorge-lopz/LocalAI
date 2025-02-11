@@ -10,9 +10,9 @@ interface ApiResponse {
 })
 export class DataService {
   isBrowser: boolean;
-  models: any;
+  models: any = {};
 
-  url = 'https://aberdeen-neil-viewing-larger.trycloudflare.com';
+  url = 'https://cart-controversy-generally-confusion.trycloudflare.com';
   headers = {
     'Content-Type': 'application/json',
     Accept: 'application/json',

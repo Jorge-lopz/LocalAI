@@ -27,7 +27,7 @@ class request(BaseModel):
 async def test():
     return {"response": "Hello, World!"}
 
-@app.post("/generate")
+@app.get("/generate")
 async def generate(request: request):
     # Send the prompt to the model on ollama
     prompt = request.prompt

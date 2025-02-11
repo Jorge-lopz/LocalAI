@@ -6,28 +6,32 @@
     <div id="uiOverlay" class="d-flex flex-column align-items-start">
         <div id="modelOverlay" class="input-group d-flex justify-content-center"
             style="width: fit-content; border-radius: 12px; padding: 1.5px; margin-bottom: 0.8rem;">
-            <input type="radio" name="model" id="model1" checked style="display: none;">
-            <label class="px-4" for="model1"
-                style="border-radius: 12px 0 0 12px; margin-inline-start: 1px; padding-block: 8px; user-select: none">Llama</label>
+            <input type="radio" name="model" id="deepseek" style="display: none;" [checked]="selectedModel?.name!.startsWith('Deepseek')"
+                (change)="switchModel('Deepseek')">
+            <label class="px-4" for="deepseek"
+                style="border-radius: 12px 0 0 12px; margin-left: 2px; padding-block: 8px; user-select: none">Deepseek</label>
 
-            <input type="radio" name="model" id="model2" style="display: none;">
-            <label class="px-4" for="model2" style="border-radius: 0 12px 12px 0; padding-block: 8px; user-select: none">Deepseek</label>
+            <input type="radio" name="model" id="llama" style="display: none;" [checked]="selectedModel?.name!.startsWith('Llam')"
+                (change)="switchModel('Llama')">
+            <label class="px-4" for="llama"
+                style="border-radius: 0 12px 12px 0; margin-inline-start: 1px; padding-block: 8px; user-select: none">Llama</label>
         </div>
         <div id="promptOverlay" style="background-color: var(--bg-body-secondary);">
             <textarea id="autoExpand" class="form-control inputPrompt" placeholder="Prompt" (input)="onPromptChange($event)"
                 (keydown)="onPromptSent($event)"></textarea>
-            <div class="d-flex gap-2">
+            <div class="d-flex gap-3" id="modifierButtons">
                 <div class="btn-group" role="group">
-                    <input type="checkbox" class="btn-check" id="Search">
-                    <label class="btn btn-outline-secondary px-3 pb-2 mt-1" for="Search">Search</label>
+                    <input type="checkbox" class="btn-check" id="search" [checked]="search">
+                    <label class="btn btn-outline-secondary px-3 pb-2 mt-1" for="search" (click)="toggleButton('search')">Search</label>
                 </div>
-                <div class="btn-group" role="group">
-                    <input type="checkbox" class="btn-check" id="Coder">
-                    <label class="btn btn-outline-secondary px-3 pb-2 mt-1" for="Coder">Coder</label>
+                <div *ngIf="1 == 1" class="btn-group" role="group" [ngClass]="selectedModel?.name?.startsWith('Llama') ? 'disabled' : ''">
+                    <input type="checkbox" class="btn-check" id="coder" [checked]="coder">
+                    <label class="btn btn-outline-secondary px-3 pb-2 mt-1" for="coder" (click)="toggleButton('coder')">Coder</label>
                 </div>
-                <div class="btn-group" role="group">
-                    <input type="checkbox" class="btn-check" id="DeepThink">
-                    <label class="btn btn-outline-secondary px-3 pb-2 mt-1" for="DeepThink">DeepThink (R1)</label>
+                <div class="btn-group" role="group" [ngClass]="selectedModel?.name?.startsWith('Llama') ? 'disabled' : ''">
+                    <input type="checkbox" class="btn-check" id="deepthink" [checked]="deepthink">
+                    <label class="btn btn-outline-secondary px-3 pb-2 mt-1" for="deepthink" (click)="toggleButton('deepthink')">DeepThink
+                        (R1)</label>
                 </div>
             </div>
         </div>
@@ -125,6 +129,11 @@
             border-radius: 2rem;
             padding: 1rem 1rem 0.5rem 1rem;
 
+            .disabled {
+                pointer-events: none;
+                opacity: 0.5;
+            }
+
             .inputPrompt {
                 resize: none;
                 border: none;
@@ -168,15 +177,15 @@
                     }
                 }
 
-                &#Search+label:before {
+                &#search+label:before {
                     mask-image: url('../../../../public/icons/browse.svg');
                 }
 
-                &#Coder+label:before {
+                &#coder+label:before {
                     mask-image: url('../../../../public/icons/code.svg') !important;
                 }
 
-                &#DeepThink+label:before {
+                &#deepthink+label:before {
                     mask-image: url('../../../../public/icons/deepthink.svg') !important;
                 }
 
@@ -210,6 +219,13 @@
                     width: 90vw !important;
                 }
             }
+        }
+    }
+
+    @media (width < 786px) {
+        #modifierButtons * {
+            font-size: 0 !important;
+            padding-right: 0 !important;
         }
     }
 </style>

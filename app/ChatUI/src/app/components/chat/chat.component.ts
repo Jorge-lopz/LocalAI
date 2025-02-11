@@ -11,36 +11,96 @@ import { Model } from '../../model/model';
 })
 export class ChatComponent {
   bubbles: Bubble[] = [];
+  search = false;
+  coder = false;
+  deepthink = false;
+  text: string = '';
+  selectedModel: Model | null = null;
 
-  constructor(private data: DataService) {
+  constructor(public data: DataService) {
     if (data.isBrowser) {
-      let storedBubbles = window.localStorage.getItem('bubbles');
+      let localStorage = window.localStorage;
+      // GET MODEL
+      let selectedModelId = localStorage.getItem('selected_model');
+      if (!selectedModelId) {
+        // If no model was previously selected
+        this.selectedModel = Object.values(this.data.models).find(
+          (model: any) => model.id === '9aab369a853b' // Deepseek-llm
+        ) as Model;
+        localStorage.setItem('selected_model', this.selectedModel.id);
+      } else {
+        this.selectedModel = Object.values(data.models).find(
+          (model: any) => model.id === selectedModelId
+        ) as Model;
+      }
+      // GET BUTTONS
+      this.toggleButton('search', localStorage.getItem('search') == 'true');
+      this.toggleButton('coder', localStorage.getItem('coder') == 'true');
+      this.toggleButton(
+        'deepthink',
+        localStorage.getItem('deepthink') == 'true'
+      );
+      // GET BUBBLES
+      let storedBubbles = localStorage.getItem('bubbles');
       if (storedBubbles) {
-        this.bubbles = JSON.parse(storedBubbles).map(
-          (b: any) =>
-            new Bubble(
-              b.message,
-              b.response,
-              Object.values(data.models).find(
-                (value: any) => value.id === b.model
-              ) as Model
-            )
-        );
+        this.bubbles = JSON.parse(storedBubbles).map((b: any) => {
+          b.message,
+            b.response,
+            Object.values(data.models).find(
+              (value: any) => value.id === b.model
+            ) as Model;
+        });
         console.log(this.bubbles);
       }
     }
   }
 
   ngAfterViewInit() {
+    // Scroll down
     if (this.data.isBrowser) {
       window.scrollTo({
         top: document.querySelector('#bubbles')!.scrollHeight,
         behavior: 'smooth',
       });
+      // Check model button
+      (
+        document.getElementById(
+          this.selectedModel!.name.startsWith('Llama') ? 'llama' : 'deepseek'
+        )! as HTMLInputElement
+      ).checked = true;
     }
   }
 
-  text: string = '';
+  toggleButton(name: String, state: boolean | null = null) {
+    switch (name) {
+      case 'search':
+        this.search = state != null ? state : !this.search;
+        localStorage.setItem('search', this.search.toString());
+        break;
+      case 'coder':
+        this.coder = state != null ? state : !this.coder;
+        localStorage.setItem('coder', this.coder.toString());
+        break;
+      case 'deepthink':
+        this.deepthink = state != null ? state : !this.deepthink;
+        localStorage.setItem('deepthink', this.deepthink.toString());
+        break;
+    }
+  }
+
+  switchModel(name: String) {
+    console.log(this.selectedModel);
+    if (name === 'Llama')
+      this.selectedModel = Object.values(this.data.models).find((model: any) =>
+        model.name.startsWith('Llama')
+      ) as Model;
+    else if (name === 'Deepseek')
+      this.selectedModel = Object.values(this.data.models).find(
+        (model: any) => model.id === '9aab369a853b' // Deepseek-llm
+      ) as Model;
+
+    localStorage.setItem('selected_model', this.selectedModel!.id);
+  }
 
   setHeight(target: HTMLTextAreaElement) {
     target.style.height = 'auto';
@@ -56,15 +116,16 @@ export class ChatComponent {
     this.text = target.value;
     this.setHeight(target);
   }
+
   onPromptSent(event: KeyboardEvent) {
     if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault();
       if (this.text.trim() === '') return; // Stop if empty input
       (event.target as HTMLTextAreaElement).value = '';
       this.setHeight(event.target as HTMLTextAreaElement);
-      this.bubbles.push(new Bubble(this.text, false));
+      this.bubbles.push({ message: this.text, response: false } as Bubble);
       this.text = '';
-      window.localStorage.setItem('bubbles', JSON.stringify(this.bubbles)); // TODO - Cypher it beforehand with user-specific key form DB
+      localStorage.setItem('bubbles', JSON.stringify(this.bubbles)); // TODO - Cypher it beforehand with user-specific key form DB
       console.log(this.bubbles);
       setTimeout(() => {
         window.scrollTo({

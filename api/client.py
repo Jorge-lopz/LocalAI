@@ -1,17 +1,6 @@
 import requests
-import subprocess
+import ollama
 
-url = "https://nutrition-activists-eminem-brisbane.trycloudflare.com"
-data = {
-    "prompt": "Hello, world!",
-    "model": "some_model_name",
-    "length": "short"
-}
+print(requests.get('http://localhost:8080/models').json())
 
-response = requests.post(url + "/generate/", json=data)
-
-print("Response:", response.json())
-
-text = subprocess.run(["ollama", "list"], capture_output=True, text=True).stdout
-for line in text.splitlines():
-    print(line.split(" ")[0].strip())
+print(ollama.chat(model='deepseek-r1:1.5b',  messages=[{'role': 'user', 'content': 'What was my last question?'}]))
