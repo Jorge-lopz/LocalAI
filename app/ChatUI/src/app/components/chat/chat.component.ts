@@ -43,13 +43,16 @@ export class ChatComponent {
       // GET BUBBLES
       let storedBubbles = localStorage.getItem('bubbles');
       if (storedBubbles) {
-        this.bubbles = JSON.parse(storedBubbles).map((b: any) => {
-          b.message,
-            b.response,
-            Object.values(data.models).find(
-              (value: any) => value.id === b.model
-            ) as Model;
-        });
+        this.bubbles = JSON.parse(storedBubbles).map(
+          (b: any) =>
+            ({
+              message: b.message,
+              response: b.response,
+              model: Object.values(data.models).find(
+                (value: any) => value.id === b.model
+              ) as Model,
+            } as Bubble)
+        );
         console.log(this.bubbles);
       }
     }

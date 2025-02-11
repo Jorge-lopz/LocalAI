@@ -223,9 +223,18 @@
     }
 
     @media (width < 786px) {
-        #modifierButtons * {
-            font-size: 0 !important;
-            padding-right: 0 !important;
+        #modifierButtons {
+            /* TODO - 370px Breakpoint, when the icons start to get smaller */
+            justify-content: center;
+
+            * {
+                font-size: 0 !important;
+                padding-right: 0 !important;
+
+                * {
+                    padding-block: 18px !important;
+                }
+            }
         }
     }
 </style>
