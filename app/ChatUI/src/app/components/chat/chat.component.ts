@@ -15,7 +15,7 @@ export class ChatComponent {
   coder = false;
   deepthink = false;
   text: string = '';
-  selectedModel: Model | null = null;
+  selectedModel: Model | undefined = undefined;
 
   constructor(public data: DataService) {
     if (data.isBrowser) {
@@ -126,7 +126,7 @@ export class ChatComponent {
       if (this.text.trim() === '') return; // Stop if empty input
       (event.target as HTMLTextAreaElement).value = '';
       this.setHeight(event.target as HTMLTextAreaElement);
-      this.bubbles.push({ message: this.text, response: false } as Bubble);
+      this.bubbles!.push({ message: this.text, response: false } as Bubble);
       this.text = '';
       localStorage.setItem('bubbles', JSON.stringify(this.bubbles)); // TODO - Cypher it beforehand with user-specific key form DB
       console.log(this.bubbles);

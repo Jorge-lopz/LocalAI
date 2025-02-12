@@ -1,5 +1,6 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { Model } from '../model/model';
 
 interface ApiResponse {
   response?: any;
@@ -9,8 +10,8 @@ interface ApiResponse {
   providedIn: 'root',
 })
 export class DataService {
-  isBrowser: boolean;
-  models: any = {};
+  isBrowser: boolean = false;
+  models: Model[] | undefined = undefined;
 
   url = 'https://cart-controversy-generally-confusion.trycloudflare.com';
   headers = {
