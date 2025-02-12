@@ -208,21 +208,19 @@
             .btn-outline-primary {
                 color: white !important;
             }
-
-            @media (width <=768px) {
-                main {
-                    margin-inline: 5vw;
-                }
-
-                #promptOverlay {
-                    bottom: 1.2rem;
-                    width: 90vw !important;
-                }
-            }
         }
     }
 
-    @media (width < 786px) {
+    @media (width <=786px) {
+        main {
+            margin-inline: 5vw;
+        }
+
+        #promptOverlay {
+            bottom: 1.2rem;
+            min-width: 87vw !important;
+        }
+
         #modifierButtons {
             /* TODO - 370px Breakpoint, when the icons start to get smaller */
             justify-content: center;

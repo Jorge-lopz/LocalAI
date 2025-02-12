@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 from supabase import create_client
 
 load_dotenv()
+
 supabase = create_client(os.getenv("SUPABASE_URL"), os.getenv("SUPABASE_KEY"))
 
 def run(cmd, label, line_handler=None):
@@ -19,10 +20,12 @@ def handle_cloudflared(line):
     if m:
         url = m.group(0)
         print("Tunnel URL:", url)
-        supabase.table("api").update({"url": url}).execute()
+        supabase.table("api").update({"url": url}).eq("id", 1).execute()
 
-t1 = threading.Thread(target=run, args=(["cloudflared", "tunnel", "--url", "http://localhost:8080"], "cloudflared", handle_cloudflared))
-t2 = threading.Thread(target=run, args=(["uvicorn", "api:app", "--host", "localhost", "--port", "8080", "--reload"], "uvicorn"))
+cloudflare = threading.Thread(target=run, args=(["cloudflared", "tunnel", "--url", "http://localhost:8080"], "cloudflared", handle_cloudflared))
+api = threading.Thread(target=run, args=(["uvicorn", "api.api:app", "--host", "localhost", "--port", "8080", "--reload"], "api"))
 
-t1.start(); t2.start()
-t1.join(); t2.join()
+# TODO Start ollama on my pc
+
+cloudflare.start(); api.start()
+cloudflare.join(); api.join()
