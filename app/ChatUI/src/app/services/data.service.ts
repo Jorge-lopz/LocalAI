@@ -11,7 +11,7 @@ interface ApiResponse {
 })
 export class DataService {
   isBrowser: boolean = false;
-  models: Model[] | undefined = undefined;
+  models: {} = {};
 
   url = 'https://cart-controversy-generally-confusion.trycloudflare.com';
   headers = {
