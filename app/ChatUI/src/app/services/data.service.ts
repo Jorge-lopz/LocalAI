@@ -1,5 +1,6 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { createClient } from '@supabase/supabase-js';
 import { Model } from '../model/model';
 
 interface ApiResponse {
@@ -13,7 +14,12 @@ export class DataService {
   isBrowser: boolean = false;
   models: {} = {};
 
-  url = 'https://cart-controversy-generally-confusion.trycloudflare.com';
+  private supabase = createClient(
+    'https://xyzcompany.supabase.co',
+    'public-anon-key'
+  );
+
+  url = 'https://' + subdomain + '.trycloudflare.com';
   headers = {
     'Content-Type': 'application/json',
     Accept: 'application/json',
