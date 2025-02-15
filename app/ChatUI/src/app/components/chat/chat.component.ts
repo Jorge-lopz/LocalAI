@@ -11,6 +11,7 @@ import { Model } from '../../model/model';
 })
 export class ChatComponent {
   bubbles: Bubble[] = [];
+  bubbleContainer: any;
   search = false;
   coder = false;
   deepthink = false;
@@ -48,9 +49,7 @@ export class ChatComponent {
             ({
               message: b.message,
               response: b.response,
-              model: Object.values(data.models).find(
-                (value: any) => value.id === b.model
-              ) as Model,
+              model: b.model,
             } as Bubble)
         );
         console.log(this.bubbles);
@@ -59,12 +58,10 @@ export class ChatComponent {
   }
 
   ngAfterViewInit() {
-    // Scroll down
     if (this.data.isBrowser) {
-      window.scrollTo({
-        top: document.querySelector('#bubbles')!.scrollHeight,
-        behavior: 'smooth',
-      });
+      this.bubbleContainer = document.querySelector('#bubbles')!;
+      // Scroll down
+      this.scrollDown();
       // Check model button
       (
         document.getElementById(
@@ -120,33 +117,56 @@ export class ChatComponent {
     this.setHeight(target);
   }
 
-  onPromptSent(event: KeyboardEvent) {
-    if (event.key === 'Enter' && !event.shiftKey) {
-      event.preventDefault();
-      if (this.text.trim() === '') return; // Stop if empty input
-      (event.target as HTMLTextAreaElement).value = '';
-      this.setHeight(event.target as HTMLTextAreaElement);
-      this.bubbles!.push({ message: this.text, response: false } as Bubble);
-      this.text = '';
-      localStorage.setItem('bubbles', JSON.stringify(this.bubbles)); // TODO - Cypher it beforehand with user-specific key form DB
-      console.log(this.bubbles);
-      setTimeout(() => {
-        window.scrollTo({
-          top: document.querySelector('#bubbles')!.scrollHeight,
-          behavior: 'smooth',
-        });
-      }, 100);
-      this.sendPrompt();
-    }
-  }
-
   exportData() {
     // TODO export data
   }
 
-  sendPrompt() {
-    this.data.sendPromptToAPI(this.text);
+  async onEnterPressed(event: KeyboardEvent) {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      if (this.text.trim() === '') return; // Stop if empty input
+      await this.sendPrompt(event.target! as HTMLTextAreaElement);
+      this.text = '';
+    }
   }
 
-  // Ejemplo de uso
+  scrollDown() {
+    setTimeout(() => {
+      window.scrollTo({
+        top: this.bubbleContainer.scrollHeight,
+        behavior: 'smooth',
+      });
+    }, 100);
+  }
+
+  async updatePromptUI(target: HTMLTextAreaElement) {
+    target.value = '';
+    this.setHeight(target);
+    this.bubbles!.push({ message: this.text, response: false } as Bubble);
+    this.scrollDown();
+  }
+
+  async sendPrompt(target: HTMLTextAreaElement) {
+    if (this.text.trim() === '') return;
+    this.updatePromptUI(target);
+
+    const bubble: Bubble = {
+      message: '',
+      response: true,
+      model: this.selectedModel!,
+    };
+    this.bubbles.push(bubble);
+
+    this.data
+      .sendPromptToAPI(this.text, 'llama3.2:3b', 'medium', (chunk: string) => {
+        bubble.message += chunk;
+        this.scrollDown();
+      })
+      .then(() => {
+        localStorage.setItem('bubbles', JSON.stringify(this.bubbles));
+      })
+      .catch((error) => {
+        console.error('Error al enviar el prompt:', error);
+      });
+  }
 }

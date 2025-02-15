@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { DataService } from './services/data.service';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @Component({
   selector: 'app-root',
@@ -8,13 +9,25 @@ import { DataService } from './services/data.service';
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-  constructor(public dataService: DataService) {}
+  @ViewChild('profileButton') profileButton!: ElementRef;
+  @ViewChild(ProfileComponent) popupComponent!: ProfileComponent;
+
+  constructor(public data: DataService) {}
+
+  clearBubbles() {
+    if (this.data.isBrowser) {
+      window.localStorage.removeItem('bubbles');
+      window.location.reload();
+    }
+  }
+
   openProfile() {
-    this.dataService.checkUserSession().then((isLoggedIn) => {
+    this.data.checkUserSession().then((isLoggedIn) => {
       if (isLoggedIn) {
-        // TODO - Open profile dialog
+        console.log('Logged in');
+        this.popupComponent.toggle();
       } else {
-        //this.data;
+        this.data.loginOAuth();
       }
     });
   }

@@ -12,9 +12,10 @@ import { DataService } from './services/data.service';
 import { BubbleComponent } from './components/bubble/bubble.component';
 import { ChatComponent } from './components/chat/chat.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
-  declarations: [AppComponent, BubbleComponent, ChatComponent],
+  declarations: [AppComponent, BubbleComponent, ChatComponent, ProfileComponent],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule],
   providers: [provideClientHydration(withEventReplay()), DataService],
   bootstrap: [AppComponent],

@@ -1,7 +1,7 @@
 <main style="position: relative;">
   <!-- Header -->
   <div class="header d-flex gap-2 position-fixed z-3">
-    <button type="button" class="btn btn-dark p-1 m-0 border-2">
+    <button type="button" class="btn btn-dark p-1 m-0 border-2" (click)="clearBubbles()">
       <img src="icons/settings.svg" alt="settings">
     </button>
     <button type="button" class="btn btn-dark p-1 m-0 border-2">
@@ -13,6 +13,7 @@
       <img src="icons/profile.svg" alt="settings">
     </button>
   </div>
+  <app-profile>HI</app-profile>
   <!-- Chat -->
   <app-chat></app-chat>
   <!-- Footer -->

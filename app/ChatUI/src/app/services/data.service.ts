@@ -69,11 +69,15 @@ export class DataService {
   }
 
   loginOAuth() {
+    console.log('HI2');
     this.supabase.auth.signInWithOAuth({
       provider: 'google',
     });
     // this.supabase.auth.updateUser({ password: 'validpassword' });
-    // supabase.auth.signOut()
+  }
+
+  logout() {
+    this.supabase.auth.signOut();
   }
 
   async checkUserSession(): Promise<Boolean> {
@@ -103,29 +107,45 @@ export class DataService {
     }
   }
 
-  async sendPromptToAPI(inputText: string) {
+  async sendPromptToAPI(
+    inputText: string,
+    model: string,
+    length: string,
+    onChunk: (chunk: string) => void
+  ): Promise<void> {
     try {
-      console.log('Se ha activado sendPromptToAPI');
-
       const response = await fetch(`${this.url}/generate`, {
         method: 'POST',
         headers: this.headers,
         body: JSON.stringify({
-          // prompt: inputText, // Asegúrate de que la clave "text" coincida con el parámetro de FastAPI
           prompt: inputText,
+          model: model,
+          length: length,
         }),
       });
-
-      console.log('Se ha enviado la petición');
-      console.log(response);
 
       if (!response.ok) {
         throw new Error(`Error: ${response.status}`);
       }
 
-      const data = await response.json();
-      console.log('Respuesta de la API:', data);
-      return data;
+      // Usar el reader para leer la respuesta en streaming
+      const reader = response.body?.getReader();
+      if (!reader) {
+        throw new Error('No se pudo obtener el reader de la respuesta.');
+      }
+      const decoder = new TextDecoder();
+      let done = false;
+
+      while (!done) {
+        const { value, done: doneReading } = await reader.read();
+        done = doneReading;
+        if (value) {
+          // Decodificar el chunk recibido
+          const chunk = decoder.decode(value, { stream: true });
+          // Llamar al callback para actualizar el bubble
+          onChunk(chunk);
+        }
+      }
     } catch (error) {
       console.error('Error al enviar datos:', error);
     }

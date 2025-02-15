@@ -3,6 +3,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import ollama
 import subprocess
+from ollama import chat, ChatResponse
+from fastapi import FastAPI, Request
+from fastapi.responses import StreamingResponse
+import asyncio
+
 
 HOST = "localhost"
 PORT = 8080
@@ -12,7 +17,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:4200", "localchat-ai.vercel.app"],
+    allow_origins=["http://localhost:4200", "localchat-ai.vercel.app", "https://5qng1j8r-4200.uks1.devtunnels.ms"],
     #allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
@@ -21,14 +26,20 @@ app.add_middleware(
 
 class Request(BaseModel):
     prompt: str
-    #model: str
-    #length: str
+    model: str
+    length: str
+
+async def generate_stream(model: str, prompt: str):
+    response = ollama.chat(model=model, messages=[{"role": "user", "content": prompt}], stream=True)
     
+    for chunk in response:
+        if "message" in chunk:
+            yield chunk["message"]["content"]  # Solo el texto generado
+            await asyncio.sleep(0)  # No bloquea el event loop
+
 @app.post("/generate")
 async def generate(request: Request):
-    # Send the prompt to the model on ollama
-    prompt = request.prompt
-    return {"response": prompt[::-1]}
+    return StreamingResponse(generate_stream(request.model, request.prompt), media_type="text/event-stream")
 
 @app.get("/models")
 async def models():

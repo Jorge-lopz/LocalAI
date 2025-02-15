@@ -35,7 +35,7 @@ leaving the user's data completely private and trasnfered through secure protoco
 
 #### CMD:
 
-> **API:** `uvicorn api:app --host localhost --port 8080 --reload`
+> **API:** `uvicorn api.api:app --host localhost --port 8080 --reload`
 >
 > **CLOUDFLARE TUNNEL:** `cloudflared tunnel --url http://localhost:8080`
 

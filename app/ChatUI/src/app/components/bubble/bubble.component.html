@@ -5,7 +5,7 @@
         <p class="d-inline" style="margin-block: auto; opacity: 0.6"> &nbsp;&nbsp;{{bubble.model!.name.split(' ')[0]}}</p>
     </div>
 
-    <div [ngClass]="{ prompt: !bubble.response }" class="my-3" style="max-width: 80%; width: fit-content; border-radius: 24px;">
+    <div [ngClass]="{ prompt: !bubble.response }" class="my-3" style="width: fit-content; border-radius: 24px;">
         <p class="m-0 px-1" style="overflow-wrap: break-word; padding-block: 2px">{{bubble.message}}</p>
     </div>
 </div>

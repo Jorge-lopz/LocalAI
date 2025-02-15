@@ -1,5 +1,5 @@
 <main class="my-5 d-flex justify-content-center">
-    <div id="bubbles" class="row my-2">
+    <div id="bubbles" class="row mt-3 mb-5">
         <app-bubble *ngFor="let item_bubble of bubbles; let i=index" [bubble]="item_bubble"
             ngClass="{{ i == bubbles.length - 1 ? 'animateLast' : ''}}"></app-bubble>
     </div>
@@ -17,8 +17,8 @@
                 style="border-radius: 0 12px 12px 0; margin-inline-start: 1px; padding-block: 8px; user-select: none">Llama</label>
         </div>
         <div id="promptOverlay" style="background-color: var(--bg-body-secondary);">
-            <textarea id="autoExpand" class="form-control inputPrompt" placeholder="Prompt" (input)="onPromptChange($event)"
-                (keydown)="onPromptSent($event)"></textarea>
+            <textarea #autoExpand id="autoExpand" class="form-control inputPrompt" placeholder="Prompt" (input)="onPromptChange($event)"
+                (keydown)="onEnterPressed($event)"></textarea>
             <div class="d-flex gap-3" id="modifierButtons">
                 <div class="btn-group" role="group">
                     <input type="checkbox" class="btn-check" id="search" [checked]="search">
@@ -33,7 +33,7 @@
                     <label class="btn btn-outline-secondary px-3 pb-2 mt-1" for="deepthink" (click)="toggleButton('deepthink')">DeepThink
                         (R1)</label>
                 </div>
-                <button (click)="sendPrompt()" type="button" id="send" class="btn" style="width: 2.6rem; margin-left: auto">
+                <button (click)="sendPrompt(autoExpand)" type="button" id="send" class="btn" style="width: 2.6rem; margin-left: auto">
                     &nbsp;
                 </button>
             </div>
@@ -57,7 +57,7 @@
 
     #bubbles {
 
-        margin-bottom: 21vh !important;
+        margin-bottom: 24vh !important;
         margin-top: 5vh !important;
         overflow: hidden;
 
