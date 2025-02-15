@@ -8,17 +8,21 @@ leaving the user's data completely private and trasnfered through secure protoco
 
 ## TODO:
 
-- [ ] Multiple LLMs running simultaneously.
-- [ ] Client interface.
-- [ ] LLM selection on client.
-- [ ] Multimodal LLM (with images and audio).
-- [ ] Voice controlled client and LLM communication.
+- [x] LLM selection on client.
+- [ ] API creation and hosting on the server.
+- [x] Private port tunneling through Cloudflare to access the API.
 - [ ] Authentication to be able to use the API.
+- [x] Secure DB connection and realtime events subscriptions.
+- [ ] Client interface.
+  - [x] Message bubbles w/ smooth animations.
+  - [ ] AI response formatting and animation.
+  - [x] Local storage for past messages on the conversation.
 - [ ] Secure DB to manage credentials and OAuth (Supabase).
-
-  #### EXTRA:
-
-  - [ ] P2P Chat
+- [ ] Multiple LLMs running simultaneously.
+- [ ] Web search feature to allow AI to access realtime data.
+- [ ] Multimodal LLM (with images and audio).
+- [ ] Admin app to remotely manage the server.
+- [ ] Multiple conversations
 
 ## NOTES:
 
@@ -28,7 +32,8 @@ leaving the user's data completely private and trasnfered through secure protoco
 
 #### CMD:
 
-> **API:** `uvicorn api:app --host localhost --port 8080 --reload`<br>
+> **API:** `uvicorn api:app --host localhost --port 8080 --reload`
+>
 > **CLOUDFLARE TUNNEL:** `cloudflared tunnel --url http://localhost:8080`
 
 ## AI:
