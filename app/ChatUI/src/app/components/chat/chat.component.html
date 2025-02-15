@@ -33,9 +33,11 @@
                     <label class="btn btn-outline-secondary px-3 pb-2 mt-1" for="deepthink" (click)="toggleButton('deepthink')">DeepThink
                         (R1)</label>
                 </div>
+                <button (click)="sendPrompt()" type="button" id="send" class="btn" style="width: 2.6rem; margin-left: auto">
+                    &nbsp;
+                </button>
             </div>
         </div>
-
     </div>
 </main>
 
@@ -151,7 +153,8 @@
                     --color: #ffffff80;
                     overflow: hidden;
                     margin-bottom: 5px;
-                    padding-top: 7px;
+                    margin-inline: 1px;
+                    padding-block: 18px !important;
                     height: 2.2rem;
                     color: var(--color);
                     font-size: 13px;
@@ -205,8 +208,34 @@
 
             }
 
+            #send {
+                background-color: rgb(var(--primary-color));
+                mask-image: url('../../../../public/icons/send.svg') !important;
+                mask-size: contain;
+                mask-repeat: no-repeat;
+                overflow: hidden;
+                border-radius: 1000px;
+
+                &:hover {
+                    background-color: color-mix(in srgb, rgb(var(--primary-color)), rgb(255, 255, 255));
+                }
+            }
+
             .btn-outline-primary {
                 color: white !important;
+            }
+        }
+    }
+
+    @media (786px < width < 910px),
+    (width <530px) {
+        #modifierButtons {
+            /* TODO - 370px Breakpoint, when the icons start to get smaller */
+            justify-content: center;
+
+            * {
+                font-size: 0 !important;
+                padding-right: 0 !important;
             }
         }
     }
@@ -219,20 +248,6 @@
         #promptOverlay {
             bottom: 1.2rem;
             min-width: 87vw !important;
-        }
-
-        #modifierButtons {
-            /* TODO - 370px Breakpoint, when the icons start to get smaller */
-            justify-content: center;
-
-            * {
-                font-size: 0 !important;
-                padding-right: 0 !important;
-
-                * {
-                    padding-block: 18px !important;
-                }
-            }
         }
     }
 </style>

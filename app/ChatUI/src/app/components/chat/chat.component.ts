@@ -18,7 +18,7 @@ export class ChatComponent {
   selectedModel: Model | undefined = undefined;
 
   constructor(public data: DataService) {
-    if (data.isBrowser) {
+    if (data.isBrowser && window.localStorage.length > 1) {
       let localStorage = window.localStorage;
       // GET MODEL
       let selectedModelId = localStorage.getItem('selected_model');
@@ -136,11 +136,17 @@ export class ChatComponent {
           behavior: 'smooth',
         });
       }, 100);
-      // TODO Call API
+      this.sendPrompt();
     }
   }
 
   exportData() {
     // TODO export data
   }
+
+  sendPrompt() {
+    this.data.sendPromptToAPI(this.text);
+  }
+
+  // Ejemplo de uso
 }

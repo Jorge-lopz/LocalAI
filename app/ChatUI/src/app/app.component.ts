@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DataService } from './services/data.service';
 
 @Component({
   selector: 'app-root',
@@ -7,16 +8,14 @@ import { Component } from '@angular/core';
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-  text: string = '';
-
-  onPromptChange(event: Event): void {
-    let target = event.target as HTMLTextAreaElement;
-    this.text = target.value;
-    target.style.height = 'auto';
-    target.style.height =
-      Math.min(
-        target.scrollHeight,
-        parseInt(getComputedStyle(target).maxHeight)
-      ) + 'px';
+  constructor(public dataService: DataService) {}
+  openProfile() {
+    this.dataService.checkUserSession().then((isLoggedIn) => {
+      if (isLoggedIn) {
+        // TODO - Open profile dialog
+      } else {
+        //this.data;
+      }
+    });
   }
 }

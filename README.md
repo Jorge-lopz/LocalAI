@@ -12,13 +12,16 @@ leaving the user's data completely private and trasnfered through secure protoco
 - [ ] API creation and hosting on the server.
 - [x] Private port tunneling through Cloudflare to access the API.
 - [ ] Authentication to be able to use the API.
+  - [ ] Secure DB to manage credentials and OAuth (Supabase).
 - [x] Secure DB connection and realtime events subscriptions.
 - [ ] Client interface.
   - [x] Message bubbles w/ smooth animations.
   - [ ] AI response formatting and animation.
   - [x] Local storage for past messages on the conversation.
-- [ ] Secure DB to manage credentials and OAuth (Supabase).
+- [ ] Use .env credentials
 - [ ] Multiple LLMs running simultaneously.
+- [ ] API rate limiting
+- [ ] JSON Conversation exporting
 - [ ] Web search feature to allow AI to access realtime data.
 - [ ] Multimodal LLM (with images and audio).
 - [ ] Admin app to remotely manage the server.

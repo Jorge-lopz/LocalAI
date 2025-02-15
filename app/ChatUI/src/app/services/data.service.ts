@@ -31,7 +31,7 @@ export class DataService {
     if (this.isBrowser) {
       // SUPABASE
       this.supabase = createClient(
-        'https://fvocvtqxawyljdmdclbu.supabase.co', // TODO environment.supabaseUrl, https://chatgpt.com/c/67acfea2-5664-8004-b906-85159fbcc376
+        'https://fvocvtqxawyljdmdclbu.supabase.co',
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ2b2N2dHF4YXd5bGpkbWRjbGJ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzkzNTc4NzIsImV4cCI6MjA1NDkzMzg3Mn0.GpZ0XGvKytQIikFFEfX6RqidUvKhpt1t8mJXGBn1qFM' //environment.supabaseKey
       );
 
@@ -68,6 +68,25 @@ export class DataService {
     }
   }
 
+  loginOAuth() {
+    this.supabase.auth.signInWithOAuth({
+      provider: 'google',
+    });
+    // this.supabase.auth.updateUser({ password: 'validpassword' });
+    // supabase.auth.signOut()
+  }
+
+  async checkUserSession(): Promise<Boolean> {
+    const {
+      data: { session },
+    } = await this.supabase.auth.getSession();
+
+    if (session) {
+      return true;
+    }
+    return false;
+  }
+
   async fetchModels() {
     try {
       const response = await fetch(`${this.url}/models`, {
@@ -81,6 +100,34 @@ export class DataService {
       window.localStorage.setItem('models', JSON.stringify(this.models));
     } catch (error) {
       console.error('Error fetching models:', error);
+    }
+  }
+
+  async sendPromptToAPI(inputText: string) {
+    try {
+      console.log('Se ha activado sendPromptToAPI');
+
+      const response = await fetch(`${this.url}/generate`, {
+        method: 'POST',
+        headers: this.headers,
+        body: JSON.stringify({
+          // prompt: inputText, // Asegúrate de que la clave "text" coincida con el parámetro de FastAPI
+          prompt: inputText,
+        }),
+      });
+
+      console.log('Se ha enviado la petición');
+      console.log(response);
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log('Respuesta de la API:', data);
+      return data;
+    } catch (error) {
+      console.error('Error al enviar datos:', error);
     }
   }
 }

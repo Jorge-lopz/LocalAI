@@ -13,22 +13,19 @@ app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:4200", "localchat-ai.vercel.app"],
+    #allow_origins=["*"],
     allow_credentials=True,
-    allow_methods=["GET", "POST"],
+    allow_methods=["*"],
     allow_headers=["*"],
 )
 
-class request(BaseModel):
+class Request(BaseModel):
     prompt: str
-    model: str
-    length: str
+    #model: str
+    #length: str
     
-@app.get("/test")
-async def test():
-    return {"response": "Hello, World!"}
-
-@app.get("/generate")
-async def generate(request: request):
+@app.post("/generate")
+async def generate(request: Request):
     # Send the prompt to the model on ollama
     prompt = request.prompt
     return {"response": prompt[::-1]}
