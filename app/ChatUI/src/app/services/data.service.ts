@@ -31,7 +31,7 @@ export class DataService {
     if (this.isBrowser) {
       // SUPABASE
       this.supabase = createClient(
-        'https://fvocvtqxawyljdmdclbu.supabase.co', //environment.supabaseUrl,
+        'https://fvocvtqxawyljdmdclbu.supabase.co', // TODO environment.supabaseUrl, https://chatgpt.com/c/67acfea2-5664-8004-b906-85159fbcc376
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ2b2N2dHF4YXd5bGpkbWRjbGJ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzkzNTc4NzIsImV4cCI6MjA1NDkzMzg3Mn0.GpZ0XGvKytQIikFFEfX6RqidUvKhpt1t8mJXGBn1qFM' //environment.supabaseKey
       );
 
