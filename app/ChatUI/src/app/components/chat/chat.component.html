@@ -9,12 +9,12 @@
             <input type="radio" name="model" id="deepseek" style="display: none;" [checked]="selectedModel?.name!.startsWith('Deepseek')"
                 (change)="switchModel('Deepseek')">
             <label class="px-4" for="deepseek"
-                style="border-radius: 12px 0 0 12px; margin-left: 2px; padding-block: 8px; user-select: none">Deepseek</label>
+                style="border-radius: 12px 0 0 12px; margin-left: 0.1rem; padding-block: 8px; user-select: none">Deepseek</label>
 
             <input type="radio" name="model" id="llama" style="display: none;" [checked]="selectedModel?.name!.startsWith('Llama')"
                 (change)="switchModel('Llama')">
             <label class="px-4" for="llama"
-                style="border-radius: 0 12px 12px 0; margin-inline-start: 1px; padding-block: 8px; user-select: none">Llama</label>
+                style="border-radius: 0 12px 12px 0; margin-inline-start: 0.1rem; padding-block: 8px; user-select: none">Llama</label>
         </div>
         <div id="promptOverlay" style="background-color: var(--bg-body-secondary);">
             <textarea #autoExpand id="autoExpand" class="form-control inputPrompt" placeholder="Prompt" (input)="onPromptChange($event)"
@@ -35,8 +35,11 @@
                     <label class="btn btn-outline-secondary px-3 pb-2 mt-1" for="deepthink" (click)="toggleButton('deepthink')">DeepThink
                         (R1)</label>
                 </div>
-                <button (click)="sendPrompt(autoExpand)" type="button" id="send" class="btn" style="width: 2.6rem; margin-left: auto">
-                    &nbsp;
+                <button (click)="sendPrompt(autoExpand)" type="button" *ngIf="!runningQuery" id="send" class="btn"
+                    [ngClass]="{'enabled': loggedIn}" style="width: 2.6rem; margin-left: auto">
+                </button>
+                <button (click)="stopPrompt()" type="button" id="stop" *ngIf="runningQuery" class="btn" [ngClass]="{'enabled': loggedIn}"
+                    style="width: 2.6rem; margin-left: auto">
                 </button>
             </div>
         </div>
@@ -210,16 +213,33 @@
 
             }
 
-            #send {
-                background-color: rgb(var(--primary-color));
-                mask-image: url('../../../../public/icons/send.svg') !important;
+            #send,
+            #stop {
+                background-color: rgba(var(--primary-color), 0.55);
                 mask-size: contain;
                 mask-repeat: no-repeat;
                 overflow: hidden;
                 border-radius: 1000px;
+                pointer-events: none;
+                opacity: 0.5;
+                filter: grayscale(1);
+
+                &.enabled {
+                    filter: none;
+                    pointer-events: all;
+                    opacity: 1;
+                }
+
+                &#send {
+                    mask-image: url('../../../../public/icons/send.svg');
+                }
+
+                &#stop {
+                    mask-image: url('../../../../public/icons/stop.svg');
+                }
 
                 &:hover {
-                    background-color: color-mix(in srgb, rgb(var(--primary-color)), rgb(255, 255, 255));
+                    background-color: rgba(var(--primary-color), 0.75);
                 }
             }
 

@@ -28,9 +28,10 @@ class Request(BaseModel):
     prompt: str
     model: str
     length: str
+    history: list = []
 
-async def generate_stream(model: str, prompt: str):
-    response = ollama.chat(model=model, messages=[{"role": "user", "content": prompt}], stream=True)
+async def generate_stream(model: str, history: list, prompt: str):
+    response = ollama.chat(model=model, messages=[*history, {"role": "user", "content": prompt}], stream=True)
     
     for chunk in response:
         if "message" in chunk:
@@ -39,7 +40,7 @@ async def generate_stream(model: str, prompt: str):
 
 @app.post("/generate")
 async def generate(request: Request):
-    return StreamingResponse(generate_stream(request.model, request.prompt), media_type="text/event-stream")
+    return StreamingResponse(generate_stream(request.model, request.history, request.prompt), media_type="text/event-stream")
 
 @app.get("/models")
 async def models():

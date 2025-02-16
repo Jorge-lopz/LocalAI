@@ -9,20 +9,21 @@ leaving the user's data completely private and trasnfered through secure protoco
 ## TODO:
 
 - [x] LLM selection on client.
-- [ ] API creation and hosting on the server.
+- [x] API creation and hosting on the server.
+  - [x] JSON Conversation exporting
+  - [x] Message history
 - [x] Private port tunneling through Cloudflare to access the API.
-- [ ] Authentication to be able to use the API.
-  - [ ] Secure DB to manage credentials and OAuth (Supabase).
+- [x] Authentication to be able to use the API.
+  - [x] Secure DB to manage credentials and OAuth (Supabase).
 - [x] Secure DB connection and realtime events subscriptions.
 - [ ] Client interface.
   - [x] Message bubbles w/ smooth animations.
-  - [ ] AI response formatting and animation.
+  - [ ] AI response formatting (Markdown and code).
   - [x] Local storage for past messages on the conversation.
-- [ ] Use .env credentials
-- [ ] Multiple LLMs running simultaneously.
-- [ ] API rate limiting
-- [ ] JSON Conversation exporting
 - [ ] Web search feature to allow AI to access realtime data.
+- [ ] Use .env credentials
+- [x] Multiple LLMs running simultaneously.
+- [x] API rate limiting
 - [ ] Multimodal LLM (with images and audio).
 - [ ] Admin app to remotely manage the server.
 - [ ] Multiple conversations
@@ -47,6 +48,8 @@ leaving the user's data completely private and trasnfered through secure protoco
 > - [Deepseek-coder](https://ollama.com/library/deepseek-coder:6.7b) `6.7B` - _3.8GB_ <br>
 > - [Deepseek-R1](https://ollama.com/library/deepseek-r1:1.5b) `1.5B` - _1.1GB_ <br>
 > - [Deepseek-llm](https://ollama.com/library/deepseek-llm:7b) `7B` - _4GB_ <br>
+> - [+ Qwen-2.5-coder](https://ollama.com/library/qwen2.5-coder) `1.5B` / `3B` - _1.9B_<br>
+> - [+ Gemma-2](https://ollama.com/library/qwen2.5-coder) `2B` - _1.6GB_<br>
 > - [+ Llava](https://ollama.com/library/llava:7b) `7B` `Vision` - _4.7GB_ <br>
 > - [+ Llava-llama-3](https://ollama.com/library/llava-llama3) `8B` `Vision` - _5.5GB_
 

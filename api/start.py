@@ -4,6 +4,8 @@ from supabase import create_client
 
 load_dotenv()
 
+os.system("start \"\" \"C:\\Users\\jlpen\\AppData\\Local\\Programs\\Ollama\\ollama app.exe\"")
+
 supabase = create_client(os.getenv("SUPABASE_URL"), os.getenv("SUPABASE_KEY"))
 
 def run(cmd, label, line_handler=None):
@@ -24,8 +26,6 @@ def handle_cloudflared(line):
 
 cloudflare = threading.Thread(target=run, args=(["cloudflared", "tunnel", "--url", "http://localhost:8080"], "cloudflared", handle_cloudflared))
 api = threading.Thread(target=run, args=(["uvicorn", "api.api:app", "--host", "localhost", "--port", "8080", "--reload"], "api"))
-
-# TODO Start ollama on my pc
 
 cloudflare.start(); api.start()
 cloudflare.join(); api.join()

@@ -16,7 +16,9 @@ export class ChatComponent {
   coder = false;
   deepthink = false;
   text: string = '';
+  loggedIn = false;
   selectedModel: Model | undefined = undefined;
+  runningQuery = false;
 
   constructor(public data: DataService) {
     if (data.isBrowser && window.localStorage.length > 1) {
@@ -34,6 +36,14 @@ export class ChatComponent {
           (model: any) => model.id === selectedModelId
         ) as Model;
       }
+      this.init();
+    }
+  }
+
+  async init() {
+    // Check authentication
+    if (await this.data.checkUserSession()) {
+      this.loggedIn = true;
       // GET BUTTONS
       this.toggleButton('search', localStorage.getItem('search') == 'true');
       this.toggleButton('coder', localStorage.getItem('coder') == 'true');
@@ -53,20 +63,20 @@ export class ChatComponent {
             } as Bubble)
         );
       }
-    }
+    } else this.loggedIn = false;
   }
 
   ngAfterViewInit() {
     if (this.data.isBrowser) {
       this.bubbleContainer = document.querySelector('#bubbles')!;
-      // Scroll down
-      this.scrollDown();
       // Check model button
       (
         document.getElementById(
           this.selectedModel!.name.startsWith('Llama') ? 'llama' : 'deepseek'
         )! as HTMLInputElement
       ).checked = true;
+      // Scroll down
+      this.scrollDown();
     }
   }
 
@@ -119,7 +129,17 @@ export class ChatComponent {
   }
 
   exportData() {
-    // TODO export data
+    const jsonData = this.formatHistory(this.bubbles, true);
+    const blob = new Blob([JSON.stringify(jsonData, null, 2)], {
+      type: 'application/json',
+    });
+    const a = Object.assign(document.createElement('a'), {
+      href: URL.createObjectURL(blob),
+      download: 'datos.json',
+    });
+
+    a.click();
+    URL.revokeObjectURL(a.href);
   }
 
   async onEnterPressed(event: KeyboardEvent) {
@@ -133,9 +153,11 @@ export class ChatComponent {
 
   scrollDown() {
     setTimeout(() => {
-      window.scrollTo({
-        top: this.bubbleContainer.scrollHeight,
-        behavior: 'smooth',
+      requestAnimationFrame(() => {
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: 'smooth',
+        });
       });
     }, 100);
   }
@@ -147,11 +169,29 @@ export class ChatComponent {
     this.scrollDown();
   }
 
-  async sendPrompt(target: HTMLTextAreaElement) {
-    if (this.text.trim() === '') return;
-    this.updatePromptUI(target);
+  formatHistory(bubbles: Bubble[], fullHistory: boolean = false): any {
+    const startIndex = fullHistory ? 0 : -12;
+    const endIndex = fullHistory ? bubbles.length : -2;
 
-    const bubble: Bubble = {
+    return bubbles.slice(startIndex, endIndex).map((bubble) => {
+      return {
+        role: bubble.response ? 'assistant' : 'user',
+        content: bubble.message,
+      };
+    });
+  }
+
+  async sendPrompt(target: HTMLTextAreaElement) {
+    // Check authentication
+    if (!(await this.data.checkUserSession())) {
+      this.data.loginOAuth();
+      return;
+    }
+    if (this.text.trim() === '' || this.runningQuery) return;
+    this.updatePromptUI(target);
+    this.runningQuery = true;
+
+    let bubble: Bubble | null = {
       message: '',
       response: true,
       model: this.selectedModel!,
@@ -160,16 +200,36 @@ export class ChatComponent {
     const activeModel = this.getActiveModel();
 
     this.data
-      .sendPromptToAPI(this.text, activeModel, 'medium', (chunk: string) => {
-        bubble.message += chunk;
-        this.scrollDown();
-      })
+      .sendPromptToAPI(
+        this.text,
+        activeModel,
+        'medium',
+        this.formatHistory(this.bubbles),
+        (chunk: string) => {
+          if (this.runningQuery == false) {
+            bubble = null;
+          }
+          if (!bubble) return;
+          bubble.message += chunk;
+          this.scrollDown();
+        }
+      )
       .then(() => {
         localStorage.setItem('bubbles', JSON.stringify(this.bubbles));
       })
       .catch((error) => {
         console.error('Error al enviar el prompt:', error);
+      })
+      .finally(() => {
+        this.runningQuery = false;
       });
+  }
+
+  stopPrompt() {
+    this.runningQuery = false;
+    let field = document.getElementById('autoExpand')! as HTMLTextAreaElement;
+    this.text = field.value;
+    field.focus();
   }
 
   getActiveModel(): string {

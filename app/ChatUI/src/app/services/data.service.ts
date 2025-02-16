@@ -3,6 +3,7 @@ import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { createClient } from '@supabase/supabase-js';
 import { Model } from '../model/model';
 import { environment } from '../../environments/environment';
+import { Bubble } from '../model/bubble';
 
 interface ApiResponse {
   response?: any;
@@ -14,6 +15,7 @@ interface ApiResponse {
 export class DataService {
   isBrowser: boolean = false;
   models: Record<string, Model> = {};
+  user: any;
 
   subdomain: string | undefined = undefined;
 
@@ -49,6 +51,8 @@ export class DataService {
           }
         );
 
+      this.checkUserSession();
+
       this.supabase
         .channel('api_url_channel')
         .on(
@@ -68,24 +72,25 @@ export class DataService {
     }
   }
 
-  loginOAuth() {
-    console.log('HI2');
+  async loginOAuth() {
     this.supabase.auth.signInWithOAuth({
       provider: 'google',
     });
+    this.checkUserSession();
     // this.supabase.auth.updateUser({ password: 'validpassword' });
   }
 
-  logout() {
-    this.supabase.auth.signOut();
+  async logout() {
+    await this.supabase.auth.signOut();
+    this.user = null;
   }
 
-  async checkUserSession(): Promise<Boolean> {
-    const {
-      data: { session },
-    } = await this.supabase.auth.getSession();
+  async checkUserSession(): Promise<boolean> {
+    let session = await this.supabase.auth.getSession();
 
-    if (session) {
+    console.log(session);
+    if (session.data.session) {
+      this.user = session.data?.session?.user;
       return true;
     }
     return false;
@@ -111,6 +116,7 @@ export class DataService {
     inputText: string,
     model: string,
     length: string,
+    history: Array<{ role: string; message: string }>,
     onChunk: (chunk: string) => void
   ): Promise<void> {
     try {
@@ -121,6 +127,7 @@ export class DataService {
           prompt: inputText,
           model: model,
           length: length,
+          history: history,
         }),
       });
 

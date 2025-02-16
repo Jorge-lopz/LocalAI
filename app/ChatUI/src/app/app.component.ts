@@ -1,6 +1,5 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { DataService } from './services/data.service';
-import { ProfileComponent } from './components/profile/profile.component';
 
 @Component({
   selector: 'app-root',
@@ -9,8 +8,10 @@ import { ProfileComponent } from './components/profile/profile.component';
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-  @ViewChild('profileButton') profileButton!: ElementRef;
-  @ViewChild(ProfileComponent) popupComponent!: ProfileComponent;
+  @ViewChild('chatComponent') chatComponent: any;
+
+  profileOpen: boolean = false;
+  email: string | null = null;
 
   constructor(public data: DataService) {}
 
@@ -24,11 +25,15 @@ export class AppComponent {
   openProfile() {
     this.data.checkUserSession().then((isLoggedIn) => {
       if (isLoggedIn) {
-        console.log('Logged in');
-        this.popupComponent.toggle();
-      } else {
-        this.data.loginOAuth();
-      }
+        this.email = this.data.user?.email;
+        this.profileOpen = !this.profileOpen;
+      } else this.data.loginOAuth();
     });
+  }
+  async logout() {
+    await this.data.logout();
+    this.profileOpen = false;
+    this.email = null;
+    window.location.reload();
   }
 }

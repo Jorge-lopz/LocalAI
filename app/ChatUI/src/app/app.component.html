@@ -4,7 +4,7 @@
     <button type="button" class="btn btn-dark p-1 m-0 border-2" (click)="clearBubbles()">
       <img src="icons/settings.svg" alt="settings">
     </button>
-    <button type="button" class="btn btn-dark p-1 m-0 border-2">
+    <button (click)="chatComponent.exportData()" type="button" class="btn btn-dark p-1 m-0 border-2">
       <img src="icons/share.svg" alt="settings">
     </button>
     <p style="margin-left: 42%; font-size: larger; font-weight: 500; opacity: 0.5; padding-top: 4px; user-select: none;">
@@ -13,11 +13,15 @@
       <img src="icons/profile.svg" alt="settings">
     </button>
   </div>
-  <app-profile>HI</app-profile>
+  <div class="popup px-3" id="profile" [ngClass]="{'visible': profileOpen}">
+    <p>{{email}}</p>
+    <button class="btn btn-dark" (click)="logout()">Logout</button>
+  </div>
   <!-- Chat -->
-  <app-chat></app-chat>
+  <app-chat #chatComponent></app-chat>
   <!-- Footer -->
-  <div class="footer d-flex position-fixed z-3"></div>
+  <div class=" footer d-flex position-fixed z-3">
+  </div>
 </main>
 
 <style>
@@ -57,5 +61,36 @@
     left: 0;
     width: 100svw !important;
     padding: 1rem !important;
+  }
+
+  .popup {
+    position: fixed;
+    background: var(--bg-body-secondary);
+    padding: 15px;
+    width: max-content;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    transition: all 0.1s ease-in;
+    display: flex;
+    flex-direction: column;
+
+    &#profile {
+      right: 0;
+      top: 4.5rem;
+      opacity: 0;
+
+      p {
+        text-align: center;
+        color: rgb(199, 199, 199);
+        font-weight: 600;
+      }
+
+      &.visible {
+        opacity: 1;
+        top: 4.5rem;
+        right: 1.1rem;
+      }
+    }
   }
 </style>
