@@ -48,7 +48,8 @@ leaving the user's data completely private and trasnfered through secure protoco
 > - [Deepseek-coder](https://ollama.com/library/deepseek-coder:6.7b) `6.7B` - _3.8GB_ <br>
 > - [Deepseek-R1](https://ollama.com/library/deepseek-r1:1.5b) `1.5B` - _1.1GB_ <br>
 > - [Deepseek-llm](https://ollama.com/library/deepseek-llm:7b) `7B` - _4GB_ <br>
-> - [+ Qwen-2.5-coder](https://ollama.com/library/qwen2.5-coder) `1.5B` / `3B` - _1.9B_<br>
+> - [+ Qwen-2.5](https://ollama.com/library/qwen2.5) `0.5B` / `1.5B` / `3B` - _1.9B_<br>
+> - [+ Qwen-2.5-coder](https://ollama.com/library/qwen2.5-coder)`1.5B` / `3B` - _1.9B_<br>
 > - [+ Gemma-2](https://ollama.com/library/qwen2.5-coder) `2B` - _1.6GB_<br>
 > - [+ Llava](https://ollama.com/library/llava:7b) `7B` `Vision` - _4.7GB_ <br>
 > - [+ Llava-llama-3](https://ollama.com/library/llava-llama3) `8B` `Vision` - _5.5GB_
