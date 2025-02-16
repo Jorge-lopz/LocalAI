@@ -11,7 +11,7 @@
             <label class="px-4" for="deepseek"
                 style="border-radius: 12px 0 0 12px; margin-left: 2px; padding-block: 8px; user-select: none">Deepseek</label>
 
-            <input type="radio" name="model" id="llama" style="display: none;" [checked]="selectedModel?.name!.startsWith('Llam')"
+            <input type="radio" name="model" id="llama" style="display: none;" [checked]="selectedModel?.name!.startsWith('Llama')"
                 (change)="switchModel('Llama')">
             <label class="px-4" for="llama"
                 style="border-radius: 0 12px 12px 0; margin-inline-start: 1px; padding-block: 8px; user-select: none">Llama</label>
@@ -24,11 +24,13 @@
                     <input type="checkbox" class="btn-check" id="search" [checked]="search">
                     <label class="btn btn-outline-secondary px-3 pb-2 mt-1" for="search" (click)="toggleButton('search')">Search</label>
                 </div>
-                <div *ngIf="1 == 1" class="btn-group" role="group" [ngClass]="selectedModel?.name?.startsWith('Llama') ? 'disabled' : ''">
+                <div (click)="getActiveModel()" *ngIf="1 == 1" class="btn-group" role="group"
+                    [ngClass]="selectedModel?.name?.startsWith('Llama') ? 'disabled' : ''">
                     <input type="checkbox" class="btn-check" id="coder" [checked]="coder">
                     <label class="btn btn-outline-secondary px-3 pb-2 mt-1" for="coder" (click)="toggleButton('coder')">Coder</label>
                 </div>
-                <div class="btn-group" role="group" [ngClass]="selectedModel?.name?.startsWith('Llama') ? 'disabled' : ''">
+                <div (click)="getActiveModel()" class="btn-group" role="group"
+                    [ngClass]="selectedModel?.name?.startsWith('Llama') ? 'disabled' : ''">
                     <input type="checkbox" class="btn-check" id="deepthink" [checked]="deepthink">
                     <label class="btn btn-outline-secondary px-3 pb-2 mt-1" for="deepthink" (click)="toggleButton('deepthink')">DeepThink
                         (R1)</label>

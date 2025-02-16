@@ -52,7 +52,6 @@ export class ChatComponent {
               model: b.model,
             } as Bubble)
         );
-        console.log(this.bubbles);
       }
     }
   }
@@ -80,10 +79,12 @@ export class ChatComponent {
       case 'coder':
         this.coder = state != null ? state : !this.coder;
         localStorage.setItem('coder', this.coder.toString());
+        if (this.coder) this.toggleButton('deepthink', false);
         break;
       case 'deepthink':
         this.deepthink = state != null ? state : !this.deepthink;
         localStorage.setItem('deepthink', this.deepthink.toString());
+        if (this.deepthink) this.toggleButton('coder', false);
         break;
     }
   }
@@ -156,9 +157,10 @@ export class ChatComponent {
       model: this.selectedModel!,
     };
     this.bubbles.push(bubble);
+    const activeModel = this.getActiveModel();
 
     this.data
-      .sendPromptToAPI(this.text, 'llama3.2:3b', 'medium', (chunk: string) => {
+      .sendPromptToAPI(this.text, activeModel, 'medium', (chunk: string) => {
         bubble.message += chunk;
         this.scrollDown();
       })
@@ -168,5 +170,21 @@ export class ChatComponent {
       .catch((error) => {
         console.error('Error al enviar el prompt:', error);
       });
+  }
+
+  getActiveModel(): string {
+    if (this.selectedModel?.name.startsWith('Deepsee')) {
+      if (this.deepthink) {
+        return 'deepseek-r1:1.5b';
+      } else if (this.coder) {
+        return 'deepseek-coder:6.7b';
+      } else {
+        return 'deepseek-llm:7b';
+      }
+    } else if (this.selectedModel?.name.startsWith('Llama')) {
+      return 'llama3.2:3b';
+    } else {
+      return 'error';
+    }
   }
 }

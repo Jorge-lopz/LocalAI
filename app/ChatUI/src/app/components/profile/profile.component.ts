@@ -9,6 +9,8 @@ import { Component } from '@angular/core';
 export class ProfileComponent {
   isOpen: boolean = false;
 
+  email = 'jlpenero2005@gmail.com';
+
   toggle() {
     this.isOpen = !this.isOpen;
   }

@@ -17,7 +17,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:4200", "localchat-ai.vercel.app", "https://5qng1j8r-4200.uks1.devtunnels.ms"],
+    allow_origins=["http://localhost:4200", "https://localchat-ai.vercel.app", "https://5qng1j8r-4200.uks1.devtunnels.ms"],
     #allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
@@ -34,8 +34,8 @@ async def generate_stream(model: str, prompt: str):
     
     for chunk in response:
         if "message" in chunk:
-            yield chunk["message"]["content"]  # Solo el texto generado
-            await asyncio.sleep(0)  # No bloquea el event loop
+            yield chunk["message"]["content"]
+            await asyncio.sleep(0)
 
 @app.post("/generate")
 async def generate(request: Request):
