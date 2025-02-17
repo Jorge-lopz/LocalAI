@@ -11,6 +11,10 @@
             <label class="px-4" for="deepseek"
                 style="border-radius: 12px 0 0 12px; margin-left: 0.1rem; padding-block: 8px; user-select: none">Deepseek</label>
 
+            <input type="radio" name="model" id="qwen" style="display: none;" [checked]="selectedModel?.name!.startsWith('Qwen')"
+                (change)="switchModel('Qwen')">
+            <label class="px-4" for="qwen" style="margin-inline-start: 0.1rem; padding-block: 8px; user-select: none">Qwen</label>
+
             <input type="radio" name="model" id="llama" style="display: none;" [checked]="selectedModel?.name!.startsWith('Llama')"
                 (change)="switchModel('Llama')">
             <label class="px-4" for="llama"
@@ -30,7 +34,7 @@
                     <label class="btn btn-outline-secondary px-3 pb-2 mt-1" for="coder" (click)="toggleButton('coder')">Coder</label>
                 </div>
                 <div (click)="getActiveModel()" class="btn-group" role="group"
-                    [ngClass]="selectedModel?.name?.startsWith('Llama') ? 'disabled' : ''">
+                    [ngClass]="selectedModel?.name?.startsWith('Deepseek') ? '' : 'disabled'">
                     <input type="checkbox" class="btn-check" id="deepthink" [checked]="deepthink">
                     <label class="btn btn-outline-secondary px-3 pb-2 mt-1" for="deepthink" (click)="toggleButton('deepthink')">DeepThink
                         (R1)</label>

@@ -53,7 +53,11 @@ async def models():
         key = parts[0]
         name, version = (key.split(":", 1) + [""])[0].strip(), (key.split(":", 1) + [""])[1].strip()
         models[parts[0]] = {
-            "avatar": 'models/' + ("llama.svg" if key.startswith('llama') else "deepseek.svg" if key.startswith('deepseek') else 'ia.svg'),
+            "avatar": 'models/' + 
+            ("llama.svg" if key.startswith('llama') 
+             else "deepseek.svg" if key.startswith('deepseek') 
+             else "qwen.svg" if key.startswith('qwen') 
+             else 'ia.svg'),
             "name": f"{name[0].upper() + name[1:]} ({version})" if version else name[0].upper() + name[1:] if name else "",
             "id": parts[1]
         }

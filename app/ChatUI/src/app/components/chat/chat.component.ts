@@ -28,7 +28,7 @@ export class ChatComponent {
       if (!selectedModelId) {
         // If no model was previously selected
         this.selectedModel = Object.values(this.data.models).find(
-          (model: any) => model.id === '9aab369a853b' // Deepseek-llm
+          (model: any) => model.id === '357c53fb659c' // Qwen
         ) as Model;
         localStorage.setItem('selected_model', this.selectedModel.id);
       } else {
@@ -72,7 +72,11 @@ export class ChatComponent {
       // Check model button
       (
         document.getElementById(
-          this.selectedModel!.name.startsWith('Llama') ? 'llama' : 'deepseek'
+          this.selectedModel!.name.startsWith('Llama')
+            ? 'llama'
+            : this.selectedModel!.name.startsWith('Qwen')
+            ? 'qwen'
+            : 'deepseek'
         )! as HTMLInputElement
       ).checked = true;
       // Scroll down
@@ -100,14 +104,17 @@ export class ChatComponent {
   }
 
   switchModel(name: String) {
-    console.log(this.selectedModel);
-    if (name === 'Llama')
-      this.selectedModel = Object.values(this.data.models).find((model: any) =>
-        model.name.startsWith('Llama')
-      ) as Model;
-    else if (name === 'Deepseek')
+    if (name === 'Deepseek')
       this.selectedModel = Object.values(this.data.models).find(
         (model: any) => model.id === '9aab369a853b' // Deepseek-llm
+      ) as Model;
+    else if (name === 'Qwen')
+      this.selectedModel = Object.values(this.data.models).find((model: any) =>
+        model.name.startsWith('Qwen')
+      ) as Model;
+    else if (name === 'Llama')
+      this.selectedModel = Object.values(this.data.models).find((model: any) =>
+        model.name.startsWith('Llama')
       ) as Model;
 
     localStorage.setItem('selected_model', this.selectedModel!.id);
@@ -233,18 +240,15 @@ export class ChatComponent {
   }
 
   getActiveModel(): string {
-    if (this.selectedModel?.name.startsWith('Deepsee')) {
-      if (this.deepthink) {
-        return 'deepseek-r1:1.5b';
-      } else if (this.coder) {
-        return 'deepseek-coder:6.7b';
-      } else {
-        return 'deepseek-llm:7b';
-      }
-    } else if (this.selectedModel?.name.startsWith('Llama')) {
-      return 'llama3.2:3b';
-    } else {
-      return 'error';
-    }
+    if (this.selectedModel?.name.startsWith('Deepseek'))
+      return this.deepthink
+        ? 'deepseek-r1:1.5b'
+        : this.coder
+        ? 'deepseek-coder:6.7b'
+        : 'deepseek-llm:7b';
+    else if (this.selectedModel?.name.startsWith('Qwen'))
+      return this.coder ? 'qwen2.5-coder:3b' : 'qwen2.5:3b';
+    else if (this.selectedModel?.name.startsWith('Llama')) return 'llama3.2:3b';
+    else return 'error';
   }
 }

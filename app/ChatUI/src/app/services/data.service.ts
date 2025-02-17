@@ -88,7 +88,6 @@ export class DataService {
   async checkUserSession(): Promise<boolean> {
     let session = await this.supabase.auth.getSession();
 
-    console.log(session);
     if (session.data.session) {
       this.user = session.data?.session?.user;
       return true;

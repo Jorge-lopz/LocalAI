@@ -45,14 +45,14 @@ leaving the user's data completely private and trasnfered through secure protoco
 #### Ollama:
 
 > - [Llama-3.2](https://ollama.com/library/llama3.2:3b) `3B` `Tools` - _2GB_ <br>
-> - [Deepseek-coder](https://ollama.com/library/deepseek-coder:6.7b) `6.7B` - _3.8GB_ <br>
+> - [Deepseek-coder](https://ollama.com/library/deepseek-coder:1.3b) `1.3B` - _776MB_ <br>
 > - [Deepseek-R1](https://ollama.com/library/deepseek-r1:1.5b) `1.5B` - _1.1GB_ <br>
 > - [Deepseek-llm](https://ollama.com/library/deepseek-llm:7b) `7B` - _4GB_ <br>
-> - [+ Qwen-2.5](https://ollama.com/library/qwen2.5) `0.5B` / `1.5B` / `3B` - _1.9B_<br>
-> - [+ Qwen-2.5-coder](https://ollama.com/library/qwen2.5-coder)`1.5B` / `3B` - _1.9B_<br>
-> - [+ Gemma-2](https://ollama.com/library/qwen2.5-coder) `2B` - _1.6GB_<br>
-> - [+ Llava](https://ollama.com/library/llava:7b) `7B` `Vision` - _4.7GB_ <br>
-> - [+ Llava-llama-3](https://ollama.com/library/llava-llama3) `8B` `Vision` - _5.5GB_
+> - [Qwen-2.5](https://ollama.com/library/qwen2.5:3b) `3B` `Tools` - _1.9B_<br>
+> - [Qwen-2.5-coder](https://ollama.com/library/qwen2.5-coder:3b) `3B` `Tools` - _1.9B_<br>
+> - [+ Gemma-2](https://ollama.com/library/gemma2:2b) `2B` - _1.6GB_<br>
+> - [+ Phi-3.5](https://ollama.com/library/phi3.5:3.8b) `3.8B` - _2.2GB_<br>
+> - [+ Llava-phi-3](https://ollama.com/library/llava-phi3:3.8b) `3.8B` `Vision` - _2.3GB_<br>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **Total storage:** `11.4GB`
 
