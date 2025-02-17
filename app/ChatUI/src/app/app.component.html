@@ -1,15 +1,18 @@
 <main style="position: relative;">
   <!-- Header -->
   <div class="header d-flex gap-2 position-fixed z-3">
-    <button type="button" class="btn btn-dark p-1 m-0 border-2" (click)="clearBubbles()">
-      <img src="icons/settings.svg" alt="settings">
+    <button type="button" class="btn btn-dark p-1 m-0 border-2 label" (click)="clearBubbles()">
+      <span class="labeltext">Clear</span>
+      <img src="icons/clear.svg" alt="clear">
     </button>
-    <button (click)="chatComponent.exportData()" type="button" class="btn btn-dark p-1 m-0 border-2">
+    <button (click)="chatComponent.exportData()" type="button" class="btn btn-dark p-1 m-0 border-2 label">
+      <span class="labeltext" style="left: -80%;">Export</span>
       <img src="icons/share.svg" alt="settings">
     </button>
-    <p style="margin-left: 42%; font-size: larger; font-weight: 500; opacity: 0.5; padding-top: 4px; user-select: none;">
+    <p id="title" style="font-size: larger; font-weight: 500; opacity: 0.5; padding-top: 4px; user-select: none;">
       Local AI</p>
-    <button id="profile" type="button" class="btn btn-dark p-0 m-0 border-2" (click)="openProfile()">
+    <button id="profile" type="button" class="btn btn-dark p-0 m-0 border-2 label" (click)="openProfile()">
+      <span class="labeltext" style="left: -160%; top: 3%">Profile</span>
       <img src="icons/profile.svg" alt="settings">
     </button>
   </div>
@@ -33,18 +36,24 @@
     background: var(--bs-body-bg);
     box-shadow: var(--bs-body-bg) 0 0 20px 10px;
 
+    #title {
+      margin-inline: auto !important;
+      width: 100%;
+      text-align: center;
+    }
+
     .btn-dark {
       width: 2.3rem !important;
       height: 2.3rem !important;
       aspect-ratio: 1/1 !important;
       border-color: rgba(var(--primary-color), 0.4);
+      border: none !important;
 
       img {
         width: 100% !important;
         height: 100% !important;
         margin-bottom: 100% !important;
       }
-
 
       &#profile {
         border: none !important;

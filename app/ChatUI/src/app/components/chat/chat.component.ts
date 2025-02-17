@@ -218,7 +218,7 @@ export class ChatComponent {
           }
           if (!bubble) return;
           bubble.message += chunk;
-          this.scrollDown();
+          // INFO - Scroll on response -> this.scrollDown();
         }
       )
       .then(() => {
@@ -244,7 +244,7 @@ export class ChatComponent {
       return this.deepthink
         ? 'deepseek-r1:1.5b'
         : this.coder
-        ? 'deepseek-coder:6.7b'
+        ? 'deepseek-coder:1.3b'
         : 'deepseek-llm:7b';
     else if (this.selectedModel?.name.startsWith('Qwen'))
       return this.coder ? 'qwen2.5-coder:3b' : 'qwen2.5:3b';

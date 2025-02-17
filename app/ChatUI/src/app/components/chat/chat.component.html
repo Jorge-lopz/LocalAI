@@ -42,7 +42,8 @@
                 <button (click)="sendPrompt(autoExpand)" type="button" *ngIf="!runningQuery" id="send" class="btn"
                     [ngClass]="{'enabled': loggedIn}" style="width: 2.6rem; margin-left: auto">
                 </button>
-                <button (click)="stopPrompt()" type="button" id="stop" *ngIf="runningQuery" class="btn" [ngClass]="{'enabled': loggedIn}"
+
+                <button (click)=" stopPrompt()" type="button" id="stop" *ngIf="runningQuery" class="btn" [ngClass]="{'enabled': loggedIn}"
                     style="width: 2.6rem; margin-left: auto">
                 </button>
             </div>
@@ -117,16 +118,18 @@
             background-clip: content-box;
             background-color: var(--bg-body-secondary);
 
-            input[type="radio"]+label {
+            input[type=" radio"]+label {
                 transition: background-color 0.3s;
             }
 
             input[type="radio"]:hover+label {
-                background-color: rgba(var(--primary-color), 0.1);
+                background-color:
+                    rgba(var(--primary-color), 0.1);
             }
 
             input[type="radio"]:checked+label {
-                background-color: rgba(var(--primary-color), 0.15);
+                background-color:
+                    rgba(var(--primary-color), 0.15);
                 color: color-mix(in srgb, rgb(var(--primary-color)), rgb(150, 200, 150));
                 outline: rgba(var(--primary-color), 0.6) 2px solid;
                 z-index: 99;
@@ -134,7 +137,6 @@
         }
 
         #promptOverlay {
-
             width: 50vw;
             background-color: var(--bg-body-secondary);
             border-radius: 2rem;
@@ -162,7 +164,8 @@
                     --color: #ffffff80;
                     overflow: hidden;
                     margin-bottom: 5px;
-                    margin-inline: 1px;
+                    margin-inline:
+                        1px;
                     padding-block: 18px !important;
                     height: 2.2rem;
                     color: var(--color);
@@ -173,19 +176,22 @@
                     display: flex;
                     align-items: center;
                     border-radius: 100px;
-                    transition: background-color 0.3s;
+                    transition:
+                        background-color 0.3s;
 
                     &:before {
                         content: '';
                         margin-top: 2px;
                         margin-left: -7px;
                         margin-right: 7px;
-                        display: inline-block;
+                        display:
+                            inline-block;
                         width: 21px;
                         height: 21px;
                         mask-size: contain;
                         background-color: var(--color);
-                        mask-repeat: no-repeat;
+                        mask-repeat:
+                            no-repeat;
                     }
                 }
 
@@ -206,24 +212,27 @@
                 }
 
                 &:checked+label {
-                    background-color: rgba(var(--primary-color), 0.2);
+                    background-color:
+                        rgba(var(--primary-color), 0.2);
                     color: color-mix(in srgb, rgb(var(--primary-color)), rgb(150, 200, 150));
                     border-color: rgba(var(--primary-color), 0.8);
 
                     &:before {
-                        background-color: color-mix(in srgb, rgb(var(--primary-color)), rgb(150, 200, 150));
+                        background-color: color-mix(in srgb,
+                                rgb(var(--primary-color)), rgb(150, 200, 150));
                     }
                 }
-
             }
 
             #send,
             #stop {
-                background-color: rgba(var(--primary-color), 0.55);
+                background-color:
+                    rgba(var(--primary-color), 0.55);
                 mask-size: contain;
                 mask-repeat: no-repeat;
                 overflow: hidden;
-                border-radius: 1000px;
+                border-radius:
+                    1000px;
                 pointer-events: none;
                 opacity: 0.5;
                 filter: grayscale(1);
@@ -239,7 +248,8 @@
                 }
 
                 &#stop {
-                    mask-image: url('../../../../public/icons/stop.svg');
+                    mask-image:
+                        url('../../../../public/icons/stop.svg');
                 }
 
                 &:hover {
@@ -268,7 +278,8 @@
 
     @media (width <=786px) {
         main {
-            margin-inline: 5vw;
+            margin-inline:
+                5vw;
         }
 
         #promptOverlay {

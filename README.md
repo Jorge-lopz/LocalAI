@@ -16,9 +16,9 @@ leaving the user's data completely private and trasnfered through secure protoco
 - [x] Authentication to be able to use the API.
   - [x] Secure DB to manage credentials and OAuth (Supabase).
 - [x] Secure DB connection and realtime events subscriptions.
-- [ ] Client interface.
+- [x] Client interface.
   - [x] Message bubbles w/ smooth animations.
-  - [ ] AI response formatting (Markdown and code).
+  - [x] AI response formatting (Markdown and code).
   - [x] Local storage for past messages on the conversation.
 - [ ] Web search feature to allow AI to access realtime data.
 - [ ] Use .env credentials
