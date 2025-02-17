@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, DoCheck } from '@angular/core';
 import { Bubble } from '../../model/bubble';
+import { marked } from 'marked';
 
 @Component({
   selector: 'app-bubble',
@@ -9,4 +10,14 @@ import { Bubble } from '../../model/bubble';
 })
 export class BubbleComponent {
   @Input() bubble!: Bubble;
+  html = '';
+
+  private previousMessage: string = '';
+
+  async ngDoCheck() {
+    if (this.bubble && this.bubble.message !== this.previousMessage) {
+      this.html = await marked.parse(this.bubble.message);
+      this.previousMessage = this.bubble.message;
+    }
+  }
 }
