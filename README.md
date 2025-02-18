@@ -6,6 +6,11 @@ where every user can access an API with the ability to communicate with various 
 The biggest advantage this solution has is it's **privacy**, as the AIs can't directly access the network,
 leaving the user's data completely private and transfered through secure protocols.
 
+<div align="center">
+  
+➡️ **[Localchat AI](localchat-ai.vercel.app)** ⬅️
+</div>
+
 ## TODO:
 
 - [x] LLM selection on client.
