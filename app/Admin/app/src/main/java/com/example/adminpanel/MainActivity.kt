@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
             var isSocketClosed = false
 
             try {
-                val host = "192.168.1.127"
+                val host = "192.168.2.243"
                 val puerto = 8001
 
                 val sslSocketFactory = createSSLSocketFactory(this@MainActivity)
