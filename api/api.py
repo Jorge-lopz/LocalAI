@@ -17,7 +17,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:4200", "https://localchat-ai.vercel.app", "https://5qng1j8r-4200.uks1.devtunnels.ms"],
+    allow_origins=["http://localhost:4200", "https://localchat-ai.vercel.app"],
     #allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
