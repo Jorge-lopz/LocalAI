@@ -4,7 +4,7 @@ The main focus of this project is to create a private network of devices (laptop
 where every user can access an API with the ability to communicate with various locally hosted LLMs.
 <br><br>
 The biggest advantage this solution has is it's **privacy**, as the AIs can't directly access the network,
-leaving the user's data completely private and trasnfered through secure protocols.
+leaving the user's data completely private and transfered through secure protocols.
 
 ## TODO:
 
