@@ -72,4 +72,6 @@ leaving the user's data completely private and trasnfered through secure protoco
 
 **[OBSOLETE] Telebit:** https://github.com/fastapi/fastapi
 
-> Telebit operates by establishing a secure tunnel between your local device and a remote server, effectively bypassing network restrictions such as firewalls. <br><br> > **Local Setup**: Telebit Remote client on a local device.<br><br> > **Relay Server**: Telebit relies on a relay server (telebit.cloud) to facilitate the connection. This server acts as an intermediary, allowing your local device to communicate with external clients.
+> Telebit operates by establishing a secure tunnel between your local device and a remote server, effectively bypassing network restrictions such as firewalls. <br><br>
+**Local Setup**: Telebit Remote client on a local device.<br><br>
+**Relay Server**: Telebit relies on a relay server (telebit.cloud) to facilitate the connection. This server acts as an intermediary, allowing your local device to communicate with external clients.
