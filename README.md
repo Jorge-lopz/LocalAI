@@ -30,10 +30,6 @@ leaving the user's data completely private and trasnfered through secure protoco
 
 ## NOTES:
 
-#### WSL:
-
-> **VENV:** `source ~/.virtualenvs/LocalAI/bin/activate`<br>
-
 #### CMD:
 
 > **API:** `uvicorn api.api:app --host localhost --port 8080 --reload`

@@ -25,7 +25,9 @@ def handle_cloudflared(line):
         supabase.table("api").update({"url": url}).eq("id", 1).execute()
 
 cloudflare = threading.Thread(target=run, args=(["cloudflared", "tunnel", "--url", "http://localhost:8080"], "cloudflared", handle_cloudflared))
-api = threading.Thread(target=run, args=(["uvicorn", "api.api:app", "--host", "localhost", "--port", "8080", "--reload"], "api"))
+#api = threading.Thread(target=run, args=(["uvicorn", "api.api:app", "--host", "localhost", "--port", "8080", "--reload"], "api"))
 
-cloudflare.start(); api.start()
-cloudflare.join(); api.join()
+cloudflare.start(); 
+#api.start()
+cloudflare.join(); 
+#api.join()
