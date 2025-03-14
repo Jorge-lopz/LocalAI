@@ -13,13 +13,8 @@ export class AppComponent {
 
   profileOpen: boolean = false;
   email: string | null = null;
-  remote: boolean = false;
 
-  constructor(public data: DataService) {
-    if (data.isBrowser) {
-      this.remote = window.localStorage.getItem('remote') === 'true';
-    }
-  }
+  constructor(public data: DataService) {}
 
   clearBubbles() {
     if (this.data.isBrowser) {
@@ -32,25 +27,16 @@ export class AppComponent {
     return new URL(url).hostname;
   }
 
-  async toggleRemote() {
-    if (this.remote) {
-      this.remote = false;
-      window.localStorage.setItem('remote', 'false');
-      this.data.changeUrl('localhost:8080');
+  async setURL() {
+    const { value: url } = await swal.fire({
+      input: 'url',
+      theme: 'dark',
+      inputLabel: 'Server URL address',
+      inputPlaceholder: 'Enter the URL',
+    });
+    if (url) {
+      this.data.changeUrl('https://' + this.getDomain(url));
       window.location.reload();
-    } else {
-      const { value: url } = await swal.fire({
-        input: 'url',
-        theme: 'dark',
-        inputLabel: 'Server URL address',
-        inputPlaceholder: 'Enter the URL',
-      });
-      if (url) {
-        window.localStorage.setItem('remote', 'true');
-        this.remote = true;
-        this.data.changeUrl('https://' + this.getDomain(url));
-        window.location.reload();
-      }
     }
   }
 }

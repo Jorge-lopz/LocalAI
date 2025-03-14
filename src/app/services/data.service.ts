@@ -22,7 +22,6 @@ export class DataService {
 
   supabase: any;
 
-  remote: boolean = false;
   url: string = '';
   headers = {
     'Content-Type': 'application/json',
@@ -37,10 +36,7 @@ export class DataService {
     this.isBrowser = isPlatformBrowser(platformId);
 
     if (this.isBrowser) {
-      this.remote = window.localStorage.getItem('remote') === 'true';
-      this.url = this.remote
-        ? window.localStorage.getItem('url') || ''
-        : 'http://localhost:8080';
+      this.url = window.localStorage.getItem('url') || '';
 
       // API - MODELS
       this.models =

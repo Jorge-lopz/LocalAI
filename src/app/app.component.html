@@ -11,8 +11,8 @@
     </button>
     <p id="title" style="font-size: larger; font-weight: 500; opacity: 0.5; padding-top: 4px; user-select: none;">
       Local AI</p>
-    <button id="remote" type="button" class="btn btn-dark p-0 border-2" (click)="toggleRemote()">
-      {{ remote ? 'Local' : 'Remote' }}
+    <button id="url" type="button" class="btn btn-dark p-0 border-2" (click)="setURL()">
+      URL
     </button>
   </div>
   <!-- Chat -->
@@ -47,7 +47,7 @@
         margin-bottom: 100% !important;
       }
 
-      &#remote {
+      &#url {
         width: min(80px, 20vw) !important;
         padding-inline: 0.5ch !important;
         border: 2px solid rgba(var(--primary-color), 0.6) !important;
