@@ -1,0 +1,65 @@
+<main style="position: relative;">
+  <!-- Header -->
+  <div class="header d-flex gap-2 position-fixed z-3">
+    <button type="button" class="btn btn-dark p-1 m-0 border-2 label" (click)="clearBubbles()">
+      <span class="labeltext">Clear</span>
+      <img src="icons/clear.svg" alt="clear">
+    </button>
+    <button (click)="chatComponent.exportData()" type="button" class="btn btn-dark p-1 m-0 border-2 label">
+      <span class="labeltext" style="left: -80%;">Export</span>
+      <img src="icons/share.svg" alt="settings">
+    </button>
+    <p id="title" style="font-size: larger; font-weight: 500; opacity: 0.5; padding-top: 4px; user-select: none;">
+      Local AI</p>
+    <button id="remote" type="button" class="btn btn-dark p-0 border-2" (click)="toggleRemote()">
+      {{ remote ? 'Local' : 'Remote' }}
+    </button>
+  </div>
+  <!-- Chat -->
+  <app-chat #chatComponent></app-chat>
+</main>
+
+<style>
+  .header {
+    top: 0;
+    left: 0;
+    width: 100svw !important;
+    padding: 1rem !important;
+    background: var(--bs-body-bg);
+    box-shadow: var(--bs-body-bg) 0 0 20px 10px;
+
+    #title {
+      margin-inline: auto !important;
+      width: 100%;
+      text-align: center;
+    }
+
+    .btn-dark {
+      width: 2.3rem !important;
+      height: 2.3rem !important;
+      aspect-ratio: 1/1 !important;
+      border-color: rgba(var(--primary-color), 0.4);
+      border: none !important;
+
+      img {
+        width: 100% !important;
+        height: 100% !important;
+        margin-bottom: 100% !important;
+      }
+
+      &#remote {
+        width: min(80px, 20vw) !important;
+        padding-inline: 0.5ch !important;
+        border: 2px solid rgba(var(--primary-color), 0.6) !important;
+      }
+    }
+  }
+
+  .footer {
+    background: var(--bs-body-bg);
+    bottom: 0;
+    left: 0;
+    width: 100svw !important;
+    padding: 1rem !important;
+  }
+</style>

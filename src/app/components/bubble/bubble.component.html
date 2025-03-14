@@ -1,0 +1,22 @@
+<div class="d-flex flex-column">
+    <div class="d-flex flex-row" *ngIf="bubble.response">
+        <img src="{{bubble.model!.avatar}}" width="28px" height="28px" style="border-radius: 2px; filter: none !important"
+            draggable="false" />
+        <p class="d-inline" style="margin-block: auto; opacity: 0.6"> &nbsp;&nbsp;{{bubble.model!.name.split(' ')[0]}}</p>
+    </div>
+
+    <div [ngClass]="{ prompt: !bubble.response, 'mb-5': !bubble.response }" class="my-3" style="border-radius: 24px;">
+        <span [ngSwitch]="bubble.response">
+            <p *ngSwitchCase="true" class="m-0 px-1 md" style="overflow-wrap: anywhere; padding-block: 2px" [innerHTML]="html"></p>
+            <p *ngSwitchCase="false" class="m-0 px-1 md" style="overflow-wrap: anywhere; padding-block: 2px">{{bubble.message}}</p>
+        </span>
+    </div>
+</div>
+<style>
+    .prompt {
+        margin-left: auto;
+        border-radius: 10px;
+        background-color: var(--bg-body-secondary);
+        padding: 0.5rem 1rem;
+    }
+</style>

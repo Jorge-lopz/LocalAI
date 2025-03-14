@@ -1,0 +1,193 @@
+<main class="my-5 d-flex justify-content-center">
+    <div id="bubbles" class="row mt-3 mb-5">
+        <app-bubble *ngFor="let item_bubble of bubbles; let i=index" [bubble]="item_bubble"
+            ngClass="{{ i == bubbles.length - 1 ? 'animateLast' : ''}}"></app-bubble>
+    </div>
+    <div id="uiOverlay" class="d-flex flex-column align-items-start">
+        <div id="modelOverlay" class="input-group d-flex justify-content-center"
+            style="width: fit-content; border-radius: 12px; padding: 1.5px; margin-bottom: 0.8rem;">
+            <select class="form-select" [(ngModel)]="selectedModel" id="modelSelect" (change)="updateSelectedModel()"
+                style="min-width: min(25vw, 220px); outline: 2px solid #217f6c; outline-offset: -3px; border: none; box-shadow: none;">
+                <option *ngFor="let model of models" [ngValue]="model">{{model.name}}</option>
+            </select>
+        </div>
+        <div class="d-flex flex-row align-items-end" style="position: relative;">
+            <div id="promptOverlay" class="ms-5" style="background-color: var(--bg-body-secondary);">
+                <textarea #autoExpand id="autoExpand" class="form-control inputPrompt" placeholder="Prompt" (input)="onPromptChange($event)"
+                    (keydown)="onEnterPressed($event)"></textarea>
+            </div>
+            <div id="sendOverlay" class="ms-3">
+                <button (click)="sendPrompt(autoExpand)" type="button" *ngIf="!runningQuery" id="send" class="btn"
+                    style="width: 2.6rem; margin-left: auto">
+                </button>
+                <button (click)="stopPrompt()" type="button" id="stop" *ngIf="runningQuery" class="btn"
+                    style="width: 2.6rem; margin-left: auto">
+                </button>
+            </div>
+        </div>
+    </div>
+</main>
+
+<style>
+    main {
+        overflow: hidden;
+        margin-inline: 26vw;
+
+        * {
+            overflow: auto;
+        }
+
+        .row {
+            width: 100%;
+        }
+    }
+
+    #bubbles {
+
+        margin-bottom: 24vh !important;
+        margin-top: 5vh !important;
+        overflow: hidden;
+
+        &:before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3.8rem;
+            display: block;
+            background: #212529;
+        }
+
+        .animateLast {
+            animation: animateLast 0.25s ease-in;
+        }
+    }
+
+    @keyframes animateLast {
+        0% {
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        65% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    #uiOverlay {
+
+        position: fixed;
+        justify-items: center;
+        align-items: center;
+        bottom: 1.3rem;
+        margin-inline: auto;
+        z-index: 99;
+
+        #modelOverlay {
+
+            margin-inline: auto;
+            background-clip: content-box;
+            background-color: var(--bg-body-secondary);
+
+            input[type="radio"]+label {
+                transition: background-color 0.3s;
+            }
+
+            input[type="radio"]:hover+label {
+                background-color:
+                    rgba(var(--primary-color), 0.1);
+            }
+
+            input[type="radio"]:checked+label {
+                background-color:
+                    rgba(var(--primary-color), 0.15);
+                color: color-mix(in srgb, rgb(var(--primary-color)), rgb(150, 200, 150));
+                outline: rgba(var(--primary-color), 0.6) 2px solid;
+                z-index: 99;
+            }
+        }
+
+        #promptOverlay {
+            width: 48vw;
+            background-color: var(--bg-body-secondary);
+            border-radius: 1.5rem;
+            padding: 1rem 1rem 0.5rem 1rem;
+
+            .disabled {
+                pointer-events: none;
+                opacity: 0.5;
+            }
+
+            .inputPrompt {
+                resize: none;
+                border: none;
+                max-height: calc(12 * 1.5rem);
+                overscroll-behavior: contain;
+                background-color: var(--bg-body-secondary);
+
+                &:focus {
+                    box-shadow: none;
+                }
+            }
+        }
+
+        #sendOverlay {
+
+            #send,
+            #stop {
+                height: 3rem;
+                background-color: #3b8d7d;
+                mask-size: contain;
+                mask-repeat: no-repeat;
+                overflow: hidden;
+                border-radius:
+                    1000px;
+                pointer-events: all;
+                opacity: 1;
+
+
+                &#send {
+                    mask-image: url('../../../../public/icons/send.svg');
+                }
+
+                &#stop {
+                    mask-image:
+                        url('../../../../public/icons/stop.svg');
+                }
+
+                &:hover {
+                    background-color: #3fad97;
+                }
+            }
+
+            .btn-outline-primary {
+                color: white !important;
+            }
+        }
+    }
+
+    @media (width <=786px) {
+        main {
+            margin-inline:
+                5vw;
+        }
+
+        #promptOverlay {
+            margin-inline-start: 0 !important;
+            bottom: 1.2rem;
+            min-width: 85vw !important;
+        }
+
+        #sendOverlay {
+            position: absolute;
+            bottom: 0.2rem;
+            right: 0.6rem;
+        }
+    }
+</style>
