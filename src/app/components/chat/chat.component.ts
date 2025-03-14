@@ -19,7 +19,7 @@ export class ChatComponent {
   models: Model[] = [];
 
   constructor(public data: DataService) {
-    if (data.isBrowser && window.localStorage.length > 1) {
+    if (data.isBrowser) {
       let localStorage = window.localStorage;
       // GET MODELS
       data.models$.subscribe((models) => {
