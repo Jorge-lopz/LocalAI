@@ -116,7 +116,7 @@ npm run watch
 LocalAI/
 ├── src/
 │   ├── app/
-│   │   ├── components/     # UI components (chat, bubble)
+│   │   ├── components/     # UI components (chat/, bubble/)
 │   │   ├── services/       # Data services and API calls
 │   │   ├── model/          # TypeScript interfaces
 │   │   └── app.module.ts   # Main app module
